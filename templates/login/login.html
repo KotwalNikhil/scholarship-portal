@@ -55,7 +55,7 @@
                 <span class="nav-link-inner--text">Dashboard</span>
               </a>
             </li>
-            {% if register == False %}
+            {% if user.is_staff == False %}
             <li class="nav-item">
               <a class="nav-link nav-link-icon" href="user_register">
                 <i class="ni ni-circle-08"></i>
@@ -115,15 +115,29 @@
                 </a>
               </div>
             </div>
+            <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div>
-              {% if register %}
-              <form role="form" action="{% url 'admin_login' %}" method="POST">
-              {% else %}
+
               <form role="form" action="{% url 'user_login' %}" method="POST">
-              {% endif %}
+
 
                 {% csrf_token %}
                 <div class="form-group mb-3">
@@ -131,12 +145,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    {% if register %}
-                    <input class="form-control"  placeholder="Emp No." type="number" name="reg_no" required>
-                    {% else %}
-                    <input class="form-control"  placeholder="Reg No." type="number" name="reg_no" required>
 
-                    {% endif %}
+                    <input class="form-control"  placeholder="Reg No./Emp No." type="number" name="reg_no" required>
+
+
                   </div>
                 </div>
                 <div class="form-group">
@@ -153,6 +165,9 @@
                     <span class="text-muted">Remember me</span>
                   </label>
                 </div>
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+                {% endif %}
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Sign in</button>
                 </div>

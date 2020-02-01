@@ -95,6 +95,22 @@
 
               <form role="form" action="{% url 'admin_register' %}" method="POST">
                 {% csrf_token %}
+                <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
                 <div class="form-group">
                   <div class="input-group input-group-alternative mb-3">
                     <div class="input-group-prepend">
@@ -124,9 +140,9 @@
 
                     <h4>Please select BRANCH:</h4>
                       <input type="radio" name="branch" value="1"> COMP<br>
-                      <input type="radio" name="branch" value="1"> IT<br>
-                      <input type="radio" name="branch" value="1"> ENTC<br>
-                      <input type="radio" name="branch" value="1"> MECH<br>
+                      <input type="radio" name="branch" value="2"> IT<br>
+                      <input type="radio" name="branch" value="3"> ENTC<br>
+                      <input type="radio" name="branch" value="4"> MECH<br>
 
 
                 </div>

@@ -47,8 +47,11 @@
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg
-">
+                {% if user.is_authenticated %}
+                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
+                {% else %}
+                <img alt="Image placeholder" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                {% endif %}
               </span>
             </div>
           </a> {% if user.is_authenticated %}
@@ -164,14 +167,10 @@
       {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'user_login' %}">
-              <i class="ni ni-key-25 text-info"></i> Login(user)
+              <i class="ni ni-key-25 text-info"></i> Login(user/admin)
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'admin_login' %}">
-              <i class="ni ni-key-25 text-info"></i> Login(admin)
-            </a>
-          </li>
+
           {% endif%}
         </ul>
         <!-- Divider -->
@@ -235,7 +234,11 @@
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="{% static 'assets/img/theme/team-4-800x800.jpg' %}">
+                  {% if user.is_authenticated %}
+                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
+                {% else %}
+                  <img alt="Image placeholder" href="{% url 'user_login' %}" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                {% endif %}
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold">{{user.first_name}}</span>
@@ -259,12 +262,12 @@
                 <i class="ni ni-calendar-grid-58"></i>
                 <span>Activity</span>
               </a>
-              <a href="log/change_password" class="dropdown-item">
+              <a href="{% url 'change_password'  %}" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
                 <span>change password</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="log/logout" class="dropdown-item">
+              <a href="{% url 'logout'  %}" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>

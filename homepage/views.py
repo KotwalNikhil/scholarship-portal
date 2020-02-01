@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from account import url
 # Create your views here.
 
 from .models import scholarship
@@ -17,6 +19,8 @@ def user_profile(request):
 def basic(request):
     return render(request,'homepage/basic.html')
 
+
+@login_required(login_url="user_login")
 def show_application_form(request,x):
     if request.user.is_authenticated:
         current_scholarship = scholarship.objects.get(pk=x)
@@ -28,13 +32,7 @@ def show_scholarship_template(request,x):
     return render(request, 'homepage/scholoarship_template.html',{'current_scholarship':current_scholarship})
 
 
-# def pdf_view(request,x):
-#     s = scholarship.objects.get(pk=x)
-#     with open('Receipt-nik.pdf', 'rb') as pdf:
-#         response = HttpResponse(pdf.read(),content_type='application/pdf')
-#         response['Content-Disposition'] = 'filename=Receipt-nik.pdf'
-#         return response
-#
+
 def pdf_view(request,x):
     s = scholarship.objects.get(pk=x)
     pdf_name=s.document

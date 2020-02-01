@@ -6,37 +6,63 @@ from .models import student,staff
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
-def user_login(request,register):
+# def user_login(request,register):
+#     if request.method=='POST':
+#         regno =request.POST['reg_no']
+#         pass2 = request.POST['pass']
+#
+#
+#         if register==True:
+#
+#             user = auth.authenticate(username=regno, password=pass2)
+#
+#             if user is not None and user.is_staff :
+#                 auth.login(request,user)
+#                 return redirect('/')
+#
+#             else:
+#                 return HttpResponse('invalid credintials')
+#
+#         else :
+#             user = auth.authenticate(username=regno, password=pass2)
+#
+#
+#             if user is not None and user.is_staff is False :
+#                 auth.login(request,user)
+#                 return redirect('/')
+#             else:
+#                 return HttpResponse('invalid credintials')
+#
+#
+#     else:
+#         return render(request, 'login/login.html', {'register':register})
+
+def user_login(request):
     if request.method=='POST':
         regno =request.POST['reg_no']
         pass2 = request.POST['pass']
 
+        user = auth.authenticate(username=regno, password=pass2)
 
-        if register==True:
-
-            user = auth.authenticate(username=regno, password=pass2)
-
-            if user is not None and user.is_staff :
+        if user is not None :
+            if user.is_staff :
                 auth.login(request,user)
+                if 'next' in request.POST:
+                    return redirect(request.POST.get('next'))
+                return redirect('/')
+            else :
+                auth.login(request, user)
+                if 'next' in request.POST:
+                    return redirect(request.POST.get('next'))
                 return redirect('/')
 
-            else:
-                return HttpResponse('invalid credintials')
-
-        else :
-            user = auth.authenticate(username=regno, password=pass2)
-
-
-            if user is not None and user.is_staff is False :
-                auth.login(request,user)
-                return redirect('/')
-            else:
-                return HttpResponse('invalid credintials')
+        else:
+             messages.error(request,'invalid credintials')
+             return render(request, 'login/login.html',)
 
 
     else:
-        return render(request, 'login/login.html', {'register':register})
-
+        return render(request, 'login/login.html',)
 
 
 def user_register(request):
@@ -49,10 +75,10 @@ def user_register(request):
         if pass1==pass2:
             if User.objects.filter(email=email).exists():
                 messages.info(request,'email taken')
-                return render(request,'login/login.html')
+                return render(request,'login/register.html')
             elif User.objects.filter(username=regno).exists():
-                messages.info(request, 'username taken')
-                return render(request,'login/login.html')
+                messages.success(request, 'username taken')
+                return render(request,'login/register.html')
             else:
                 user = User.objects.create_user(first_name=fname,username=regno,password=pass1,email=email,is_staff=False)
                 user.save();
@@ -60,12 +86,13 @@ def user_register(request):
                 stu=student.objects.create(name=fname,email=email,reg_no=regno)
                 stu.save()
 
+                messages.success(request, 'registration succesfull')
 
                 return render(request, 'login/login.html')
 
         else :
             messages.info(request,'password not matched')
-            return render(request,'login/login.html')
+            return render(request,'login/register.html')
     else:
         return render(request,'login/register.html')
 
@@ -81,10 +108,10 @@ def admin_register(request):
         # if pass1==pass2:
         if User.objects.filter(email=email).exists():
             messages.info(request,'email taken')
-            return HttpResponse("<h2>email taken</h2>")
+            return render(request, 'login/admin_register.html')
         elif User.objects.filter(username=empno).exists():
             messages.info(request, 'username taken')
-            return HttpResponse("<h2>username taken</h2>")
+            return render(request, 'login/admin_register.html')
         else:
             user = User.objects.create_user(first_name=fname,username=empno,password="12345",email=email,is_staff=True)
             user.save();
@@ -93,7 +120,8 @@ def admin_register(request):
             staf.save()
 
 
-            return HttpResponse("<h2>registration successfull</h2>")
+            messages.info(request,'registration successfull')
+            return render(request, 'login/admin_register.html')
 
         # else :
         #     messages.info(request,'password not matched')
