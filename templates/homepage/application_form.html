@@ -2,17 +2,18 @@
     
     {% block content %}
 <br>
-<div class="pt-10">
-<div class="col-xl-8 order-xl-1 ">
+<div class="pt-10 ">
+<div class="col-xl-12 order-xl-1 ">
           <div class="card bg-secondary shadow">
-            <div class="card-header bg-white border-0">
+            <div class="card-header bg-secondary border-0">
               <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">Application Form</h3>
+                <div class="col-12" style="text-align: center;">
+                  <h1 class="mb-0">Application Form  of <u>{{current_scholarship.title}}</u></h1>
+                  <!-- <a href="#!" class="btn btn-lg btn-primary" >{{current_scholarship.title}}</a> -->
                 </div>
-                <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">{{current_scholarship.title}}</a>
-                </div>
+                <!-- <div class="col-4 text-left" style="text-align: center;">
+                  <a href="#!" class="btn btn-lg btn-primary" style="size: 20px;">{{current_scholarship.title}}</a>
+                </div> -->
               </div>
             </div>
             <div class="card-body">

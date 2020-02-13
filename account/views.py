@@ -62,6 +62,8 @@ def user_login(request):
 
 
     else:
+        # if 'next' in request.POST:
+        messages.info(request, 'please login before applying')
         return render(request, 'login/login.html',)
 
 
