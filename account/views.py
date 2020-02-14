@@ -5,37 +5,19 @@ from django.contrib import messages
 from .models import student,staff
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.utils import timezone
 
-# def user_login(request,register):
-#     if request.method=='POST':
-#         regno =request.POST['reg_no']
-#         pass2 = request.POST['pass']
-#
-#
-#         if register==True:
-#
-#             user = auth.authenticate(username=regno, password=pass2)
-#
-#             if user is not None and user.is_staff :
-#                 auth.login(request,user)
-#                 return redirect('/')
-#
-#             else:
-#                 return HttpResponse('invalid credintials')
-#
-#         else :
-#             user = auth.authenticate(username=regno, password=pass2)
-#
-#
-#             if user is not None and user.is_staff is False :
-#                 auth.login(request,user)
-#                 return redirect('/')
-#             else:
-#                 return HttpResponse('invalid credintials')
-#
-#
-#     else:
-#         return render(request, 'login/login.html', {'register':register})
+from django.core.mail import send_mail
+from django.conf import settings
+
+def email(request):
+    subject = 'Thank you for registering to our site'
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['nikhilkotwalcse@gmail.com',]
+    send_mail( subject, message, email_from, recipient_list )
+    return redirect('redirect to a new page')
+
 
 def user_login(request):
     if request.method=='POST':
