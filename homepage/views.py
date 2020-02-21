@@ -13,8 +13,8 @@ def home(request):
         return render(request,'homepage/welcome_page.html',{'all_scholar':scholarships})
 
 
-def user_profile(request):
-    return render(request,'homepage/profile.html')
+# def user_profile(request):
+#     return render(request,'homepage/profile.html')
 
 def basic(request):
     return render(request,'homepage/basic.html')

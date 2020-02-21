@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scholarship',
-
+    #'account.apps.AccountConfig',
     'homepage',
 ]
 
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'scholarship.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'scholarship_db',
+        'NAME': 's2',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost'

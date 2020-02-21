@@ -2,13 +2,29 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import student,staff
+from .models import student,staff,profile
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
-from django.utils import timezone
 
+from .form import profile_update_form
 from django.core.mail import send_mail
 from django.conf import settings
+
+# def profile(request):
+#     p_form=profile_update_form()
+#     return render(request,)
+
+
+def user_profile(request):
+    if request.method == 'POST':
+        p_form = profile_update_form(request.POST,request.FILES,instance=request.user.profile)
+        if p_form.is_valid():
+            p_form.save()
+            messages.success(request, 'profile updated succesfully')
+
+    else :
+        p_form = profile_update_form(instance=request.user)
+    return render(request,'homepage/profile.html',{'p_form':p_form})
 
 def email(request):
     subject = 'Thank you for registering to our site'

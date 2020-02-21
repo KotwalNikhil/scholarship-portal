@@ -2,18 +2,44 @@
     <!-- End Navbar -->
     <!-- Header -->
     {% block content %}
+
+<script>
+function myFunction(x) {
+  document.getElementById(x).style.display = "block";
+
+}
+</script>
+
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
       <!-- Mask -->
       <span class="mask bg-gradient-default opacity-8"></span>
       <!-- Header container -->
+
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
+
           <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">Hello {{user.first_name}}</h1>
             <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-            <img class="img-responsive img-rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTBZMuk4s3xE4oXZNZ6TNCbFeEhQY4Xmh13j8FWN2eBzGM41yy&s" alt="Chania">
-            <a href="#!" class="btn btn-info">Edit profile pic</a>
+            <img class="img-responsive img-rounded" src="{{ user.profile.image.url }}" alt="profile pic" style="height: 200px; width: 200px;">
+            
           </div>
+          <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
         </div>
       </div>
     </div>
@@ -30,7 +56,9 @@
                   </a>
                 </div>
               </div>
+
             </div>
+
             <div class="card-header text-center border-0 pt-6 pt-md-6 pb-0 md-6">
               <div class="d-flex justify-content-between">
                 <a href="#" class="btn btn-sm btn-default ">Scholarships applied</a>
@@ -78,11 +106,21 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                  <button onclick="myFunction('demo')" class="btn btn-sm btn-primary">Edit</button>
                 </div>
               </div>
             </div>
             <div class="card-body">
+              <!--- udation form-->
+             <form id="demo" method="POST" enctype="multipart/form-data" style="display: none;">
+          {% csrf_token %}
+            <div class="nik" style="color:#D0D3D4;">
+
+          {{ p_form }}
+            </div>
+          <button><input type="submit" value="update info"></button>
+        </form>
+        <!--- udation form-->
               <form>
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
@@ -104,7 +142,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.first_name}}" value="{{user.first_name}}" >
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" >
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -136,7 +174,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Roll No.</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.first_name}}" value="7231" >
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.roll_no}}" value="7231" >
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -147,6 +185,40 @@
                     </div>
                   </div>
                 </div>
+                <!---documents--->
+                                <hr class="my-4" />
+
+                <h6 class="heading-small text-muted mb-4">Documents Uploaded</h6>
+
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" >Last year marksheet</label>
+                        {{user.profile.document_last_sem.url}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class ="row">
+                         <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" >class 12 marksheet</label>
+                        {{user.profile.documentt12.url}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" >class 10 marksheet</label>
+                        {{user.profile.document10.url}}
+                      </div>
+                    </div>
+                    
+                </div>
+              </div>
+                              <hr class="my-4" />
+
                 <!-- Address -->
                 <h6 class="heading-small text-muted mb-4">Contact information</h6>
                 <div class="pl-lg-4">
@@ -154,7 +226,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-address">Permanent Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
+                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{user.profile.address}}" type="text">
                       </div>
                     </div>
                   </div>
@@ -192,6 +264,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
       <!-- Footer -->
       <footer class="footer">
