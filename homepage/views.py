@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from account import url
+from .form import add_scholarship_form
+from django.contrib import messages
+
+
 # Create your views here.
 
 from .models import scholarship
@@ -13,8 +17,16 @@ def home(request):
         return render(request,'homepage/welcome_page.html',{'all_scholar':scholarships})
 
 
-# def user_profile(request):
-#     return render(request,'homepage/profile.html')
+def add_scholarship_function(request):
+    if request.method == 'POST':
+        p_form = add_scholarship_form(request.POST, request.FILES)
+        if p_form.is_valid():
+            p_form.save()
+            messages.success(request, 'profile updated succesfully')
+
+    else:
+        p_form = add_scholarship_form(instance=request.user)
+    return render(request,'homepage/add_scholarship.html',{'p_form':p_form})
 
 def basic(request):
     return render(request,'homepage/basic.html')

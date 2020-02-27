@@ -32,17 +32,16 @@ class staff(models.Model):
 
 class profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
-    reg_no = models.IntegerField(validators=[
-        MinValueValidator(10000),
-        MaxValueValidator(20000)],default=0)
+    branch=models.IntegerField(default=0)
+    division=models.IntegerField(default=0)
     name = models.CharField(max_length=20,default='')
-    email = models.EmailField(max_length=250,default='')
-    image= models.ImageField(upload_to='profile_pics',default='pics/default.png')
+
+    image= models.ImageField(upload_to='pics/profile_pics',default='pics/profile_pics/default.png')
     roll_no=models.IntegerField(default=0)
     address=models.CharField(max_length=50,default='')
-    document10 = models.FileField(upload_to='documents/user_documents/10marksheets',default='')
-    document12 = models.FileField(upload_to='documents/user_documents/12marksheets',default='')
-    document_last_sem = models.FileField(upload_to='documents/user_documents/last_marksheets',default='')
+    document10 = models.FileField(upload_to='documents/user_documents/10marksheets',default='documents/user_documents/default.jpg')
+    document12 = models.FileField(upload_to='documents/user_documents/12marksheets',default='documents/user_documents/default.jpg')
+    document_last_sem = models.FileField(upload_to='documents/user_documents/last_marksheets',default='documents/user_documents/default.jpg')
 
 
 
@@ -50,6 +49,15 @@ class profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} profile'
+
+@receiver(post_save,sender=User)
+def create_profile(sender,instance,created,**kwargs):
+    if created:
+        profile.objects.create(user=instance)
+
+@receiver(post_save,sender=User)
+def save_profile(sender,instance,**kwargs):
+    instance.profile.save()
 
 
 

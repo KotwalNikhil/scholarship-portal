@@ -8,7 +8,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', views.home, name="home"),
-   # path('user_profile',views.user_profile,name='profile'),
+    path('add_scholarship',views.add_scholarship_function,name='add_scholarship'),
     path('basic', views.basic, name='basichtml'),
     url(r'^application_form/(?P<x>[0-9]+)/$', views.show_application_form, name='application_form'),
     url(r'^show_scholarship_template/(?P<x>[0-9]+)/$',views.show_scholarship_template,name='show_template'),
