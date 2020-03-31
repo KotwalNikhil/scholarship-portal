@@ -1,0 +1,47 @@
+{% extends 'homepage/basic.html' %}
+
+
+
+{% block content %}
+
+<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px;" >
+  <div class="row welcome ">
+      <div class="col-12">
+        <h2 class="title">{{current_scholarship.title}} </h2>
+      </div>
+    </div>
+</div>
+									
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.no</th>
+      <th scope="col">Scholarship</th>
+      <th scope="col">Reg No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+
+    </tr>
+  </thead>
+  {% for x in students %}
+  <tbody>
+  	
+    <tr>
+      <th scope="row">1</th>
+      <td>{{current_scholarship.title}}</td>
+      <td>{{x.username}}</td>
+      <td>{{x.first_name}}</td>
+            <td>{{x.email}}</td>
+
+    </tr>
+  </tbody>
+      {% endfor %}
+
+</table>
+
+
+
+
+
+
+{% endblock %}

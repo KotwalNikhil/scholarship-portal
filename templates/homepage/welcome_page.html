@@ -1,11 +1,22 @@
 {% extends 'homepage/basic.html' %}
-
+<style >
+  div.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+}
+div.scrollmenu a
+ {
+  display: inline-block;
+}
+</style>
 {% block content %}
-  <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-      <div class="container-fluid">
+
+   <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8  "> 
+      <div class="container-fluid "> 
         <div class="header-body">
           <!-- Card stats -->
-          <div class="row">
+<!--           <div class="row  flex-row flex-nowrap  ">
+ -->               <div class="row   ">
 
       {% for i in all_scholar %}
             <div class="col-xl-3 col-lg-6" style="margin-bottom:3%;">
@@ -13,18 +24,14 @@
                 <div class="card-body"style="height:250px">
                   <div class="row">
                     <div class="col">
-<!--                      <h5 class="card-title text-uppercase text-muted mb-0">{{i.applicants}} applications</h5>-->
                       <span class="h2 font-weight-bold mb-0" style="font-family:Arial, Helvetica, sans-serif; text-transform: uppercase";> {{i.title}}</span><br>
                     </div>
                     <div class="col-auto">
                       <div  class="btn btn-danger btn-sm" style="font-size:10px;">Active
 
                       </div>
-                       <!--<img src="{{i.img.url}}" alt="image">-->
                     </div>
                   </div>
-<!--                  <p class="mt-3 mb-0 text-muted text-sm">-->
-<!--                    <span class="text-success mr-2">{{i.fromdate}}-{{i.toomdate}}</span>-->
                     <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
 <button type="button" class="btn btn-success btn-md" style="position:absolute;
 bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
@@ -33,6 +40,7 @@ bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-
               </div></a>
             </div>
       {% endfor %}
+    
 
           </div>
         </div>

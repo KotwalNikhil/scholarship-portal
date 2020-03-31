@@ -19,6 +19,8 @@ urlpatterns=[
     path('user_profile',views.user_profile,name='profile'),
     #path('admin_login', views.user_login, {'register':True},name='admin_login'),
     path('admin_register',views.admin_register,name='admin_register'),
+    url(r'^admin_delete/(?P<x>[0-9]+)/$', views.admin_delete, name='admin_delete'),
+
     path('change_password', views.change_password, name='change_password'),
 
     path('reset-password',PasswordResetView.as_view(),name='password-reset'),

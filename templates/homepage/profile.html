@@ -67,34 +67,32 @@ function myFunction(x) {
             <div class="card-body pt-0 pt-md-4">
               <div class="row">
                 <div class="col">
-                  <div class="card-profile-stats d-flex justify-content-center md-5">
-                    <div>
-                      <span class="heading">5</span>
-                      <span class="description">Applied</span>
-                    </div>
-                    <div>
-                      <span class="heading">2</span>
-                      <span class="description">selected</span>
-                    </div>
-                    <div>
-                      <span class="heading">3</span>
-                      <span class="description">Rejected</span>
-                    </div>
-                  </div>
+                  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.no</th>
+      <th scope="col">Scholarship </th>
+      
+
+    </tr>
+  </thead>
+  {% for x in scholarships %}
+  <tbody>
+    
+    <tr>
+      <th scope="row">1</th>
+      <td>{{x.title}}</td>
+      
+    </tr>
+  </tbody>
+      {% endfor %}
+
+</table>
+
+
                 </div>
               </div>
-              <div class="text-center">
-                  <a href="#" class="list-group-item list-group-item-action list-group-item-info">ud chalo</a>
-                  <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">nikhil ki scholarship</a>
-                  <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
-                  <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">nhi hai esa kuch</a>
-                  <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
-
-
-                <hr class="my-4" />
-                <p>Scholarship team — If you found anything wrong please contact us.</p>
-                <a href="#">contact us</a>
-              </div>
+              
             </div>
           </div>
         </div>

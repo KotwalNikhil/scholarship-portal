@@ -9,10 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from .form import profile_update_form
 from django.core.mail import send_mail
 from django.conf import settings
-
-# def profile(request):
-#     p_form=profile_update_form()
-#     return render(request,)
+from homepage.models import application_table,scholarship
 
 
 def user_profile(request):
@@ -21,18 +18,31 @@ def user_profile(request):
         if p_form.is_valid():
             p_form.save()
             messages.success(request, 'profile updated succesfully')
+            return render(request,'homepage/profile.html')
 
     else :
-        p_form = profile_update_form(instance=request.user)
-    return render(request,'homepage/profile.html',{'p_form':p_form})
+        p_form = profile_update_form(instance=request.user.profile)
 
-def email(request):
-    subject = 'Thank you for registering to our site'
-    message = ' it  means a world to us '
+        ###########################
+        applications=application_table.objects.all()
+        scholarships=[]
+        for app in applications:
+            print(type(app.user_id),type(request.user.id))
+            if  app.user_id==request.user.id:
+                scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
+
+
+
+
+        return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
+
+def sendemail(recipient_list,emp,name):
+    subject = 'This is auto generated mail ,dont reply.'
+    message = ' Congratulations '+name+' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login and change your password ,If its not you kindly report the superuser '
     email_from = settings.EMAIL_HOST_USER
-    recipient_list = ['nikhilkotwalcse@gmail.com',]
-    send_mail( subject, message, email_from, recipient_list )
-    return redirect('redirect to a new page')
+    #recipient_list = ['nikhilkotwalcse@gmail.com',]
+    send_mail( subject, message, email_from, recipient_list,fail_silently=False )
+    #return redirect('redirect to a new page')
 
 
 def user_login(request):
@@ -99,41 +109,55 @@ def user_register(request):
 
 
 def admin_register(request):
+    all_staffs=staff.objects.all()
     if request.method=='POST':
         empno = request.POST['emp_number']
         fname = request.POST['fname']
         admin_branch = request.POST['branch']
-        # pass2 = request.POST['pass2']
         email = request.POST['email']
-        # if pass1==pass2:
         if User.objects.filter(email=email).exists():
             messages.info(request,'email taken')
-            return render(request, 'login/admin_register.html')
+            return render(request, 'login/admin_register.html',{'all_staffs':all_staffs})
         elif User.objects.filter(username=empno).exists():
             messages.info(request, 'username taken')
-            return render(request, 'login/admin_register.html')
+            return render(request, 'login/admin_register.html',{'all_staffs':all_staffs})
         else:
+            for app in all_staffs:
+                if app.branch == int(admin_branch):
+                    messages.error(request, 'branch already taken')
+                    # return render(request,'homepage/index.html')
+                    return render(request, 'login/admin_register.html', {'all_staffs': all_staffs})
+
             user = User.objects.create_user(first_name=fname,username=empno,password="12345",email=email,is_staff=True)
             user.save();
 
             staf=staff.objects.create(name=fname,email=email,emp_no=empno,branch=admin_branch)
             staf.save()
 
+            reciptent_list=[email]
+            sendemail(reciptent_list,empno,fname)
 
             messages.info(request,'registration successfull')
-            return render(request, 'login/admin_register.html')
+            return render(request, 'login/admin_register.html',{'all_staffs':all_staffs})
 
-        # else :
-        #     messages.info(request,'password not matched')
-        #     return render(request,'login/login.html')
     else:
-        return render(request,'login/admin_register.html')
+        return render(request,'login/admin_register.html',{'all_staffs':all_staffs})
 
 
 
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+def admin_delete(request,x):
+    sta=staff.objects.get(pk=x)
+    u = User.objects.get(username=sta.emp_no)
+    u.delete()
+    sta.delete()
+    messages.info(request, 'deletion successfull')
+    all_staffs=staff.objects.all()
+    return render(request, 'login/admin_register.html', {'all_staffs': all_staffs})
 
 
 def del_user(request):

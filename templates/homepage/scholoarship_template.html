@@ -97,6 +97,7 @@
         </div>
       </div>
  </div>
+ 
 
 <section class="graph">
     <div class="container-fluid mt--7">
@@ -158,9 +159,10 @@
     </div>
 
 </section>
+{% if not user.is_superuser %}
 <div class="footer text-center">
-  <a href="{% url 'application_form' current_scholarship.id %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
-
+  <a href="{% url 'application_form' current_scholarship.id  %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
 </div>
+{% endif %}
 
  {% endblock %}

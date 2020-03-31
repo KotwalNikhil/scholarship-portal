@@ -1,78 +1,57 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'homepage/basic.html' %}
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>
-   register
-  </title>
-  <!-- Favicon -->
-  <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <!-- Icons -->
-  <link href="{% static 'assets/js/plugins/nucleo/css/nucleo.css' %}" rel="stylesheet" />
-  <link href="{% static 'assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link href="{% static 'assets/css/argon-dashboard.css' %}" rel="stylesheet" />
-</head>
 
-<body class="bg-default">
-  <div class="main-content">
-    <!-- Navbar -->
-    <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
-      <div class="container px-4">
-        <a class="navbar-brand" href="../index.html">
-          <img src="{% static 'assets/img/brand/white.png' %}" />
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar-collapse-main">
-          <!-- Collapse header -->
-          <div class="navbar-collapse-header d-md-none">
-            <div class="row">
-              <div class="col-6 collapse-brand">
-                <a href="../index.html">
-                  <img src="{% static 'assets/img/brand/blue.png' %}">
-                </a>
-              </div>
-              <div class="col-6 collapse-close">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
-                  <span></span>
-                  <span></span>
-                </button>
-              </div>
-            </div>
-          </div>
+
+{% block content %}
           <!-- Navbar items -->
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="/">
-                <i class="ni ni-planet"></i>
-                <span class="nav-link-inner--text">Dashboard</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="{% url 'admin_register' %}">
-                <i class="ni ni-circle-08"></i>
-                <span class="nav-link-inner--text">ADMIN REGISTER</span>
-              </a>
-            </li>
-
-          </ul>
-        </div>
+          <div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px;" >
+  <div class="row welcome ">
+      <div class="col-12">
+        <h2 class="title">REGISTERED ADMINS </h2>
       </div>
-    </nav>
+    </div>
+</div>
+                  
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">EMP NO</th>
+      <th scope="col">NAME</th>
+      <th scope="col">BRANCH</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">DELETE</th>
+
+
+    </tr>
+  </thead>
+   {% for x in all_staffs %}
+  <tbody>
+    
+    <tr>
+      
+      <td>{{x.emp_no}}</td>
+      <td>{{x.name}}</td>
+      {% if x.branch == 1 %}<td>Comp</td>{% endif %}
+      {% if x.branch == 2 %}<td>IT</td>{% endif %}
+      {% if x.branch == 3 %}<td>ENTC</td>{% endif %}
+      {% if x.branch == 4 %}<td>MECH</td>{% endif %}
+
+      <td>{{x.email}}</td>
+      <td><a href="{% url 'admin_delete' x.id %}"><i class="fa fa-minus-circle" style="font-size:18px;color:red"></i></a></td>
+
+    </tr>
+  </tbody>
+      {% endfor %}
+ 
+</table>
+
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8">
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Welcome SUPERUSER</h1>
+              <h1 class="text-white">ADD ADMIN</h1>
               <p class="text-lead text-light">Please Create an account for our ADMIN</p>
             </div>
           </div>
@@ -150,9 +129,8 @@
 
                 <div class="row my-4">
                   <div class="col-12">
-                    <div class="custom-control custom-control-alternative custom-checkbox">
-                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                      <label class="custom-control-label" for="customCheckRegister">
+                    <div class="custom-control custom-control-alternative ">
+                      <label class="custom-control" >
                         <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
                       </label>
                     </div>
@@ -169,48 +147,7 @@
     </div>
   </div>
   <!-- Footer -->
-  <footer class="py-5">
-    <div class="container">
-      <div class="row align-items-center justify-content-xl-between">
-        <div class="col-xl-6">
-          <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-          </div>
-        </div>
-        <div class="col-xl-6">
-          <ul class="nav nav-footer justify-content-center justify-content-xl-end">
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-  </div>
-  <!--   Core   -->
-  <script src="{% static 'assets/js/plugins/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{% static 'assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-  <!--   Optional JS   -->
-  <!--   Argon JS   -->
-  <script src="{% static 'assets/js/argon-dashboard.min.js' %}"></script>
-  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js' %}"></script>
-  <script>
-    window.TrackJS &&
-      TrackJS.install({
-        token: "ee6fab19c5a04ac1a32a645abde4613a",
-        application: "argon-dashboard-free"
-      });
-  </script>
-</body>
+  
 
-</html>
+
+  {% endblock %}
