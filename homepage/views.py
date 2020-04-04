@@ -1,22 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from account import url
 from .form import add_scholarship_form
 from django.contrib import messages
-from .models import application_table
+from .models import application_table,scholarship
 from account.models import staff
 from django.contrib.auth.models import User, auth
-
+from datetime import date
 # Create your views here.
 
 from .models import scholarship
 def home(request):
     scholarships=scholarship.objects.all()
+    today_date = date.today()
+    expired = []
+    not_expired = []
+    for s in scholarships:
+        if today_date > s.toomdate:
+            expired.append(s)
+        else:
+            not_expired.append(s)
     if request.user.is_authenticated:
-        return render(request,'homepage/index.html',{'all_scholar':scholarships})
+        return render(request,'homepage/index.html',{'expired':expired,'not_expired':not_expired})
     else:
-        return render(request,'homepage/welcome_page.html',{'all_scholar':scholarships})
+        return render(request,'homepage/welcome_page.html',{'expired':expired,'not_expired':not_expired})
 
 
 def add_scholarship_function(request):
@@ -26,6 +34,7 @@ def add_scholarship_function(request):
             p_form.save()
             messages.success(request, 'scholarship added succesfully')
             return render(request, 'homepage/index.html')
+
 
 
     else:
@@ -46,11 +55,38 @@ def show_application_form(request,x):
 
 
 
+
+
+
+def delete_scholarship(request,x):
+    try:
+        s=scholarship.objects.get(pk=x)
+        s.delete()
+    except:
+        return HttpResponse('ERROR in deleting')
+
+    messages.error(request, 'scholarship deleted successfully')
+
+    scholarships=scholarship.objects.all()
+    return render(request, 'homepage/index.html', {'all_scholar': scholarships})
+
+
 def show_scholarship_template(request,x):
     # print(type(x))
     current_scholarship=scholarship.objects.get(pk=x)
     if not request.user.is_staff or request.user.is_superuser:
-        return render(request, 'homepage/scholoarship_template.html',{'current_scholarship':current_scholarship})
+
+        my_record = scholarship.objects.get(id=x)
+        form = add_scholarship_form(instance=my_record)
+        if request.method == "POST":
+            form = add_scholarship_form(request.POST, instance=my_record)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Scholarship updated succesfully')
+            scholarships = scholarship.objects.all()
+            return redirect(request.META['HTTP_REFERER'])
+
+        return render(request, 'homepage/scholoarship_template.html',{'current_scholarship':current_scholarship,'p_form':form})
     else:
         applications=application_table.objects.all()
         admin=staff.objects.get(emp_no=request.user.username)

@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import student,staff,profile
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 
 from .form import profile_update_form
 from django.core.mail import send_mail
@@ -30,15 +31,11 @@ def user_profile(request):
             print(type(app.user_id),type(request.user.id))
             if  app.user_id==request.user.id:
                 scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
-
-
-
-
         return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
 
 def sendemail(recipient_list,emp,name):
     subject = 'This is auto generated mail ,dont reply.'
-    message = ' Congratulations '+name+' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login and change your password ,If its not you kindly report the superuser '
+    message = ' Congratulations '+name+' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login with http://127.0.0.1:8000/log/change_password and change your password ,If its not you kindly report the superuser '
     email_from = settings.EMAIL_HOST_USER
     #recipient_list = ['nikhilkotwalcse@gmail.com',]
     send_mail( subject, message, email_from, recipient_list,fail_silently=False )
@@ -174,7 +171,7 @@ def del_user(request):
     except:
         return HttpResponse( "The user not found")
 
-
+@login_required(login_url="user_login")
 def change_password(request):
     if request.method=='POST':
         form=PasswordChangeForm(data=request.POST,user=request.user)

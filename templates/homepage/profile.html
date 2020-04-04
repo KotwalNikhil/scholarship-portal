@@ -1,11 +1,51 @@
 {% extends 'homepage/basic.html' %}
-{% load crispy_forms_tags %}
+
+{% block includefiles %}
+<style>
+
+
+  .formitself{
+    background-color: white;
+    padding: 5%;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 5px 10px grey;
+  }
+
+  .submitbtn{
+    margin: 0 auto;
+    background-color: #0c85d0;
+    padding: 2%;
+    color: white;
+    border-radius: 10%;
+  }
+
+  .submitbtn:hover{
+    background-color: #00ccff;
+  }
+
+
+</style>
+
+{% endblock %}
+
 
     {% block content %}
 
 <script>
 function myFunction(x) {
-  document.getElementById(x).style.display = "block";
+  var y = document.getElementById(x);
+  if(y.style.display == "block")
+  {
+    y.style.display = "none";
+  }
+  else
+  {
+    y.style.display = "block";
+  }
 
 }
 </script>
@@ -112,17 +152,21 @@ function myFunction(x) {
               <!--- udation form-->
               <div class="row">
                 <div class="col-md-lg-6">
-                  <div class="page-header">
+                  
+                  <div class="container">
+                    <div class="formwrapper">
+                       <form class="formitself" id="demo" method="POST" enctype="multipart/form-data" style="display: none;">
+                        <div class="page-header">
                     <h1>Edit your profile here</h1>
                   </div>
-                 <form id="demo" method="POST" enctype="multipart/form-data" style="display: none;">
-                    {% csrf_token %}
-                    <div class="nik" style="color:#D0D3D4;">
+                          {% csrf_token %}
 
-                     {{ p_form |crispy }}
+                          {{ p_form.as_p }}
+
+                          <input class="submitbtn" type="submit"  value="update info">
+                       </form>
                     </div>
-                    <button><input type="submit" class="btn btn-success" value="update info"></button>
-                 </form>
+                  </div>
                 </div>
              </div>
                              <hr class="my-4" />
