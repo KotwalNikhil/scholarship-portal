@@ -34,8 +34,8 @@ def user_profile(request):
         return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
 
 def sendemail(recipient_list,emp,name):
-    subject = 'This is auto generated mail ,dont reply.'
-    message = ' Congratulations '+name+' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login with http://127.0.0.1:8000/log/change_password and change your password ,If its not you kindly report the superuser '
+    subject = 'Congratulations '+ name
+    message =  ' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login with http://127.0.0.1:8000/log/change_password and change your password ,If its not you kindly report the superuser .This is auto generated mail ,dont reply.'
     email_from = settings.EMAIL_HOST_USER
     #recipient_list = ['nikhilkotwalcse@gmail.com',]
     send_mail( subject, message, email_from, recipient_list,fail_silently=False )

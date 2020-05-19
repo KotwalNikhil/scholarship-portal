@@ -19,6 +19,14 @@ class scholarship(models.Model):
 class application_table(models.Model):
     scholarship_id=models.IntegerField(default=0)
     user_id=models.IntegerField(default=0)
+    applied_student_id = models.FileField(upload_to='applications/student_id',blank=True,null=True)
+    applied_father_id = models.FileField(upload_to='applications/father_id',blank=True,null=True)
+    applied_document_last_sem = models.FileField(upload_to='applications/document_last_sem',blank=True,null=True)
+    applied_document12 = models.FileField(upload_to='applications/document12',blank=True,null=True)
+    applied_document10 = models.FileField(upload_to='applications/document10',blank=True,null=True)
+    applied_extra1 = models.FileField(upload_to='applications/extra1',blank=True,null=True)
+    applied_extra2 = models.FileField(upload_to='applications/extra2',blank=True,null=True)
+
 
 
 

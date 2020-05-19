@@ -84,7 +84,7 @@ def show_scholarship_template(request,x):
                 form.save()
             messages.success(request, 'Scholarship updated succesfully')
             scholarships = scholarship.objects.all()
-            return redirect(request.META['HTTP_REFERER'])
+            return redirect(request.META['HTTP_REFERER'])#for previous page with refresh
 
         return render(request, 'homepage/scholoarship_template.html',{'current_scholarship':current_scholarship,'p_form':form})
     else:
@@ -95,9 +95,13 @@ def show_scholarship_template(request,x):
 
 
         for app in applications:
-            student=User.objects.get(id=app.user_id)
-            if student.profile.branch==var and app.scholarship_id==int(x):
-                students.append(student)
+            try:
+                student=User.objects.get(id=app.user_id)
+                if student.profile.branch==var and app.scholarship_id==int(x):
+                    students.append(student)
+            except:
+                app.delete()
+                continue
 
         return render(request,'homepage/admin_panel.html',{'admin':admin,'students':students,'current_scholarship':current_scholarship})
 
@@ -113,16 +117,26 @@ def pdf_view(request,x):
 def submit_application(request,x,y):
     if request.method=='POST':
         all_aps=application_table.objects.all()
+        EXTRA1 = request.POST['extra1']
+        EXTRA2 = request.POST['extra2']
         for app in all_aps:
             if app.scholarship_id==int(x) and app.user_id==int(y):
                 messages.error(request, 'scholarship already applied')
                 # return render(request,'homepage/index.html')
-                return HttpResponse('scholarship already applied')
+                #return HttpResponse('scholarship already applied')
+                return redirect(request.META['HTTP_REFERER'])
 
-        application=application_table.objects.create(scholarship_id=x,user_id=y)
-        application.save()
-        messages.success(request, 'scholarship applied succesfully')
-        # return render(request,'homepage/index.html')
-        return HttpResponse('scholarship applied succesfully')
+        if request.user.profile.document10 and request.user.profile.document12 and request.user.profile.document_last_sem and request.user.profile.student_id and request.user.profile.father_id:
+
+            application=application_table.objects.create(scholarship_id=x,user_id=y,applied_document10=request.user.profile.document10,applied_document12=request.user.profile.document12,applied_document_last_sem=request.user.profile.document_last_sem,applied_father_id=request.user.profile.father_id,applied_student_id=request.user.profile.student_id,applied_extra1=EXTRA1,applied_extra2=EXTRA2)
+            application.save()
+            messages.success(request, 'scholarship applied succesfully')
+            # return render(request,'homepage/index.html')
+            #return HttpResponse('scholarship applied succesfully')
+            return redirect(request.META['HTTP_REFERER'])
+
+        else:
+            messages.error(request, 'Upload all documents')
+            return redirect(request.META['HTTP_REFERER'])
 
 

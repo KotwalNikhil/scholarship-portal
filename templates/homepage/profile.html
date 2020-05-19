@@ -246,30 +246,72 @@ function myFunction(x) {
                     <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" >Last year marksheet   </label>
-                        <p>{{user.profile.document_last_sem.url}}</p>
-                        <img class="img-responsive img-rounded" src="{{user.profile.document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                    
+                        <div>
+                          {% if user.profile.document_last_sem %}
+                          <p class="text-dark">{{user.profile.document_last_sem.url}}</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
                       </div>
                     </div>
                   </div>
-                  <div class ="row">
                          <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" >class 12 marksheet </label>
-                       <p> {{user.profile.document12.url}}</p>
-                       <img class="img-responsive img-rounded" src="{{user.profile.document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
+                        <div>
+                       {% if user.profile.document12 %}
+                           <p class="text-dark"> {{user.profile.document12.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{user.profile.document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
+                        {% else %}
+                            <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
+                  
                     <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" >class 10 marksheet</label>
-                       <p> {{user.profile.document10.url}}</p>
-                       <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
+                        <div>
+                       {% if user.profile.document10 %}
+                           <p> {{user.profile.document10.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" >Father's Identity card</label>
+                        <div>
+                       {% if user.profile.father_id %}
+                           <p> {{user.profile.document10.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{user.profile.father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;">
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" >Student's Identity/Dependent card</label>
+                        <div>
+                       {% if user.profile.student_id %}
+                           <p> {{user.profile.student_id.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
                       </div>
                     </div>
                     
-                </div>
+              
               </div>
                               <hr class="my-4" />
 
@@ -322,7 +364,13 @@ function myFunction(x) {
 
       </div>
       <!-- Footer -->
-      <footer class="footer">
+      
+    </div>
+  
+
+  {% endblock %}
+  
+  <footer class="footer">
         <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
             <div class="copyright text-center text-xl-left text-muted">
@@ -347,8 +395,3 @@ function myFunction(x) {
           </div>
         </div>
       </footer>
-    </div>
-  
-
-  {% endblock %}
-  

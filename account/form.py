@@ -5,7 +5,7 @@ from django import forms
 class profile_update_form(forms.ModelForm):
     class Meta:
         model = profile
-        fields = [ 'image', 'address','document10','document12','document_last_sem']
+        fields = [ 'image', 'address','document10','document12','document_last_sem','father_id' ,'student_id']
 
         labels = {
 
@@ -13,7 +13,9 @@ class profile_update_form(forms.ModelForm):
             'address': 'Address',
             'document10': 'class 10th marksheet(.jpg)',
             'document12': 'class 12th marksheet(.jpg)',
-            'document_last_sem': 'Last year marsheet(.jpg)'
+            'document_last_sem': 'Last year marsheet(.jpg)',
+            'father_id':'Fathers Identity card',
+            'student_id':'Student Identity/dependent card '
         }
 
 

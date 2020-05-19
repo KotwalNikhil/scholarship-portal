@@ -53,27 +53,23 @@
       {% for i in not_expired %}
             <div class="col-xl-4 "  >
               <a href="{% url 'show_template' i.id %}"> <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body"style="height:250px;">
+                <div class="card-body"style="height:150px;width:auto;background-color:LightGray;">
                   <div class="row">
-                    <div class="col">
+                    <div class="col-6">
                       <span class="h2 font-weight-bold mb-0" style="font-family:Arial, Helvetica, sans-serif; text-transform: uppercase";> {{i.title}}</span><br>
                     </div>
-                    <div class="col-auto">
+                    <div class="col-6 text-right">
                       <div  class="btn btn-success btn-sm" style="font-size:10px;">Active
 
                       </div>
                     </div>
                   </div>
                     <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
-                  {% if i.id in expired %}
-                <button type="button" class="btn btn-danger btn-md" style="position:absolute;
+                  
+                  <!-- <button type="button" class="btn btn-success btn-md" style="position:absolute;
 bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
-<!--                  </p>-->
-                  {% else %}
-                  <button type="button" class="btn btn-success btn-md" style="position:absolute;
-bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
-
-                  {% endif %}
+ -->
+ <p style="color:green;bottom:5%;left:5%;text-transform: capitalize;"><b>{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</b></p>
                 </div>
               </div></a>
             </div>
@@ -82,25 +78,22 @@ bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-
       {% for i in expired %}
             <div class="col-xl-4" style="margin-bottom:3%;" >
               <a href="{% url 'show_template' i.id %}"> <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body"style="height:250px">
+                <div class="card-body"style="height:150px;width:auto;background-color:LightGray;">
                   <div class="row">
-                    <div class="col">
-<!--                      <h5 class="card-title text-uppercase text-muted mb-0">{{i.applicants}} applications</h5>-->
+                    <div class="col-6">
                       <span class="h2 font-weight-bold mb-0" style="font-family:Arial, Helvetica, sans-serif; text-transform: uppercase";> {{i.title}}</span><br>
                     </div>
-                    <div class="col-auto">
+                    <div class="col-6 text-right">
                       <div  class="btn btn-danger btn-sm" style="font-size:10px;">InActive
 
                       </div>
-                       <!--<img src="{{i.img.url}}" alt="image">-->
                     </div>
                   </div>
-<!--                  <p class="mt-3 mb-0 text-muted text-sm">-->
-<!--                    <span class="text-success mr-2">{{i.fromdate}}-{{i.toomdate}}</span>-->
                     <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
-                <button type="button" class="btn btn-danger btn-md" style="position:absolute;
+                <!-- <button type="button" class="btn btn-danger btn-md" style="position:absolute;
 bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
-
+ -->
+ <p style="color:red;bottom:5%;left:5%;text-transform: capitalize;"><b>{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</b></p>
 
                 </div>
               </div></a>

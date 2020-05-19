@@ -39,9 +39,11 @@ class profile(models.Model):
     image= models.ImageField(upload_to='pics/profile_pics',default='pics/profile_pics/default.png')
     roll_no=models.IntegerField(default=0)
     address=models.CharField(max_length=50,default='')
-    document10 = models.FileField(upload_to='documents/user_documents/10marksheets',default='documents/user_documents/default.jpg')
-    document12 = models.FileField(upload_to='documents/user_documents/12marksheets',default='documents/user_documents/default.jpg')
-    document_last_sem = models.FileField(upload_to='documents/user_documents/last_marksheets',default='documents/user_documents/default.jpg')
+    document10 = models.FileField(upload_to='documents/user_documents/10marksheets',blank=True,null=True)
+    document12 = models.FileField(upload_to='documents/user_documents/12marksheets',blank=True,null=True)
+    document_last_sem = models.FileField(upload_to='documents/user_documents/last_marksheets',blank=True,null=True)
+    father_id = models.FileField(upload_to='documents/user_documents/father_id',blank=True,null=True)
+    student_id = models.FileField(upload_to='documents/user_documents/student_id',blank=True,null=True)
 
 
 
