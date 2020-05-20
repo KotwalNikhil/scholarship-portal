@@ -35,20 +35,6 @@
 
     {% block content %}
 
-<script>
-function myFunction(x) {
-  var y = document.getElementById(x);
-  if(y.style.display == "block")
-  {
-    y.style.display = "none";
-  }
-  else
-  {
-    y.style.display = "block";
-  }
-
-}
-</script>
 
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
       <!-- Mask -->
@@ -58,10 +44,9 @@ function myFunction(x) {
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
 
-          <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello {{user.first_name}}</h1>
-            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-            <img class="img-responsive img-rounded" src="{{ user.profile.image.url }}" alt="profile pic" style="height: 200px; width: 200px;">
+          <div class="col-lg-7 col-md-10" style=" justify-content: center; align-self: center;">
+            
+            <img class="img-responsive img-rounded" src="{{ student.profile.image.url }}" alt="profile pic" style="height: 300px; width: 300px;">
             
           </div>
           <div class ="form-group">
@@ -86,89 +71,22 @@ function myFunction(x) {
     <!-- Page content -->
     <div class="container-fluid mt--7">
       <div class="row">
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-          <div class="card card-profile shadow">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2 mt-5">
-                <div class="card-profile-image">
-                  <a href="#">
-                    <img src="static/assets/img/brand/scholarship.png" class="rounded-circle" alt="sholar">
-                  </a>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="card-header text-center border-0 pt-6 pt-md-6 pb-0 md-6">
-              <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-default ">Scholarships applied</a>
-              </div>
-            </div>
-            <div class="card-body pt-0 pt-md-4">
-              <div class="row">
-                <div class="col">
-                  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">S.no</th>
-      <th scope="col">Scholarship </th>
-      
-
-    </tr>
-  </thead>
-  {% for x in scholarships %}
-  <tbody>
-    
-    <tr>
-      <th scope="row">1</th>
-      <td>{{x.title}}</td>
-      
-    </tr>
-  </tbody>
-      {% endfor %}
-
-</table>
-
-
-                </div>
-              </div>
-              
-            </div>
-          </div>
+        <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0">
+          
         </div>
-        <div class="col-xl-8 order-xl-1">
+        <div class="col-xl-12 order-xl-12">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">My account</h3>
+                  <h3 class="mb-0">{{ student.first_name }}</h3>
                 </div>
-                <div class="col-4 text-right">
-                  <button onclick="myFunction('demo')" class="btn btn btn-primary">Edit</button>
-                </div>
+               
               </div>
             </div>
             <div class="card-body">
               <!--- udation form-->
-              <div class="row">
-                <div class="col-md-lg-6">
-                  
-                  <div class="container">
-                    <div class="formwrapper">
-                       <form class="formitself" id="demo" method="POST" enctype="multipart/form-data" style="display: none;">
-                        <div class="page-header">
-                    <h1>Edit your profile here</h1>
-                  </div>
-                          {% csrf_token %}
-
-                          {{ p_form.as_p }}
-
-                          <input class="submitbtn" type="submit"  value="update info">
-                       </form>
-                    </div>
-                  </div>
-                </div>
-             </div>
+              
                              <hr class="my-4" />
 
         <!--- udation form-->
@@ -179,13 +97,13 @@ function myFunction(x) {
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-username">REG NO.</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="{{user.username}}" value="{{user.username}}"disabled>
+                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="{{student.studentname}}" value="{{student.username}}"disabled>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="{{user.email}}" disabled>
+                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="{{student.email}}" disabled>
                       </div>
                     </div>
                   </div>
@@ -193,13 +111,13 @@ function myFunction(x) {
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" disabled>
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{student.profile.name}}" value="{{student.profile.name}}" disabled>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Father's rank</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="{{user.last_name}}" value="{{user.profile.father_rank}}"disabled>
+                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="{{student.last_name}}" value="{{student.profile.father_rank}}"disabled>
                       </div>
                     </div>
                   </div>
@@ -211,23 +129,23 @@ function myFunction(x) {
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-username">Last year marks(SGPA)</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative"  value="{{user.profile.marks}}" disabled>
+                        <input type="text" id="input-username" class="form-control form-control-alternative"  value="{{student.profile.marks}}" disabled>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Class</label>
-{% if user.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP"> {% endif %}
-      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}
-      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
-      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %}                       </div>
+{% if student.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP"> {% endif %}
+      {% if student.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}
+      {% if student.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
+      {% if student.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %}                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Roll No.</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{student.profile.roll_no}}" >
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -250,9 +168,9 @@ function myFunction(x) {
                         <label class="form-control-label" >Last year marksheet   </label>
                     
                         <div>
-                          {% if user.profile.document_last_sem %}
-                          <p class="text-dark">{{user.profile.document_last_sem.url}}</p>
-                          <img class="img-responsive img-rounded" src="{{user.profile.document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% if application.applied_document_last_sem %}
+                          <p class="text-dark">{{application.applied_document_last_sem.url}}</p>
+                          <img class="img-responsive img-rounded" src="{{application.applied_document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
                           {% else %}
                           <p class="text-danger">document not uploaded</p>
                           {% endif %}
@@ -263,9 +181,9 @@ function myFunction(x) {
                       <div class="form-group">
                         <label class="form-control-label" >class 12 marksheet </label>
                         <div>
-                       {% if user.profile.document12 %}
-                           <p class="text-dark"> {{user.profile.document12.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
+                       {% if application.applied_document12 %}
+                           <p class="text-dark"> {{application.applied_document12.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
                         {% else %}
                             <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -277,9 +195,9 @@ function myFunction(x) {
                       <div class="form-group">
                         <label class="form-control-label" >class 10 marksheet</label>
                         <div>
-                       {% if user.profile.document10 %}
-                           <p> {{user.profile.document10.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
+                       {% if application.applied_document10 %}
+                           <p> {{application.applied_document10.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -290,9 +208,9 @@ function myFunction(x) {
                       <div class="form-group">
                         <label class="form-control-label" >Father's Identity card</label>
                         <div>
-                       {% if user.profile.father_id %}
-                           <p> {{user.profile.document10.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;">
+                       {% if application.applied_father_id %}
+                           <p> {{application.applied_father_id.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;">
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -303,9 +221,35 @@ function myFunction(x) {
                       <div class="form-group">
                         <label class="form-control-label" >Student's Identity/Dependent card</label>
                         <div>
-                       {% if user.profile.student_id %}
-                           <p> {{user.profile.student_id.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                       {% if application.applied_student_id %}
+                           <p> {{application.applied_student_id.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_student_id.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
+                      </div>
+                    </div>
+                     <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" >Extra 1</label>
+                        <div>
+                       {% if application.applied_extra1 %}
+                           <p> {{application.applied_extra1.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_extra1.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
+                      </div>
+                    </div>
+                     <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" >Extra 2</label>
+                        <div>
+                       {% if application.applied_extra2 %}
+                           <p> {{application.applied_extra2.url}}</p>
+                           <img class="img-responsive img-rounded" src="{{application.applied_extra2.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -324,7 +268,7 @@ function myFunction(x) {
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-address">Permanent Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{user.profile.address}}" type="text">
+                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{student.profile.address}}" type="text">
                       </div>
                     </div>
                   </div>

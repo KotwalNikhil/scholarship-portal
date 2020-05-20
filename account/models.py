@@ -35,6 +35,10 @@ class profile(models.Model):
     branch=models.IntegerField(default=0)
     division=models.IntegerField(default=0)
     name = models.CharField(max_length=20,default='')
+    marks=models.IntegerField(default=0,blank=True,null=True)
+    father_rank=models.CharField(max_length=20,default='',blank=True,null=True)
+    father_name=models.CharField(max_length=30,default='',blank=True,null=True)
+
 
     image= models.ImageField(upload_to='pics/profile_pics',default='pics/profile_pics/default.png')
     roll_no=models.IntegerField(default=0)

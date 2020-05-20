@@ -1,45 +1,98 @@
 {% extends 'homepage/basic.html' %}
 
+{% block includefiles %}
+<style type="text/css">
+.table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
+
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
+ .table td {
+  font-size: 40px;
+  vertical-align: bottom;
+}
+ .heading tr,th{
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    color: black;
+    font-size: 40px;
+  }
+  tr:hover {background-color:#f2f2f2;}
+
+tr[data-href]
+{
+  cursor:pointer;
+}
+
+</style>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded",()=>
+  {
+    const rows=document.querySelectorAll("tr[data-href]");
+    console.log(rows);
+    rows.forEach(row =>
+    {
+      row.addEventListener("click",()=>
+      {
+        window.location.href = row.dataset.href;
+      });
+    });
+  });
+</script>
+
+{% endblock %}
 
 
 {% block content %}
 
-<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px;" >
+
+
+<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; " >
   <div class="row welcome ">
       <div class="col-12">
-        <h2 class="title">{{current_scholarship.title}} </h2>
+        <h2 class="title" style="font-size: 30px;">{{current_scholarship.title}} </h2>
       </div>
     </div>
 </div>
 									
 <table class="table">
-  <thead class="thead-dark">
+  <thead class="heading">
     <tr>
-      <th scope="col">S.no</th>
-      <th scope="col">Scholarship</th>
-      <th scope="col">Reg No</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
+      <th style="font-size: 15px;">S.no</th>
+      <th style="font-size: 15px;">Student</th>
+      <th style="font-size: 15px;">Reg No</th>
+      <th style="font-size: 15px;">Name</th>
+      <th style="font-size: 15px;">Marks</th>
+      <th style="font-size: 15px;">Father's rank</th>
+
 
     </tr>
   </thead>
-  {% for x in students %}
   <tbody>
+  {% for x,y in students %}
+  
   	
-    <tr>
-      <th scope="row">1</th>
-      <td>{{current_scholarship.title}}</td>
-      <td>{{x.username}}</td>
-      <td>{{x.first_name}}</td>
-            <td>{{x.email}}</td>
+    <tr  data-href="{% url 'applied_application' x.id y.id  %}">
+      <td style="font-size: 20px;"></td>
+      <td><img class="img-responsive img-rounded" src="{{ x.profile.image.url }}" alt="profile pic" style="height: 100px; width: 100px;"></td>
+      <td style="font-size: 20px;">{{x.username}}</td>
+      <td style="font-size: 20px;">{{x.first_name}}</td>
+      <td style="font-size: 20px;">{{x.profile.marks}}</td>
+      <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+
 
     </tr>
-  </tbody>
+
+ 
       {% endfor %}
-
+       </tbody>
 </table>
-
-
 
 
 

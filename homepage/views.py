@@ -98,14 +98,17 @@ def show_scholarship_template(request,x):
             try:
                 student=User.objects.get(id=app.user_id)
                 if student.profile.branch==var and app.scholarship_id==int(x):
-                    students.append(student)
+                    students.append((student,app))
             except:
                 app.delete()
                 continue
 
         return render(request,'homepage/admin_panel.html',{'admin':admin,'students':students,'current_scholarship':current_scholarship})
 
-
+def applied_application(request,x,y):
+    application=application_table.objects.get(id=y)
+    student=User.objects.get(id=x)
+    return render(request, 'homepage/applied_application_form.html',{'student':student,'application':application})
 
 def pdf_view(request,x):
     s = scholarship.objects.get(pk=x)
