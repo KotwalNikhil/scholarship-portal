@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'scholarship',
     'homepage',
+    'import_export',
 ]
 
 MIDDLEWARE = [
