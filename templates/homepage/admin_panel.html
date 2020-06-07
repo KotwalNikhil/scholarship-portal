@@ -2,6 +2,23 @@
 
 {% block includefiles %}
 <style type="text/css">
+
+@media only screen and (max-width: 800px) {
+  #unseen table td:nth-child(2), 
+  #unseen table th:nth-child(2) {display: none;}
+}
+ 
+@media only screen and (max-width: 640px) {
+
+  #unseen table td:nth-child(2),
+  #unseen table th:nth-child(2){display: none;}
+}
+  
+  
+#collapse1{
+overflow-x:scroll;
+}
+
 .table {
   counter-reset: serial-number;  /* Set the serial number counter to 0 */
   width: 100%;
@@ -53,23 +70,37 @@ tr[data-href]
 
 
 
-<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; " >
+<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; overflow:auto;" >
   <div class="row welcome ">
       <div class="col-12">
         <h2 class="title" style="font-size: 30px;">{{current_scholarship.title}} </h2>
       </div>
     </div>
 </div>
-									
-<table class="table">
+<!-- <div class="container padding text-center mb-4" >
+  <h4>Sort with </h4>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" onclick="javascript:window.location.href='https://stackoverflow.com'; return false; " id="option1" autocomplete="off" checked> Marks
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Attendence
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Father rank
+  </label>
+</div>
+</div> -->
+					<div id="collapse1">				
+<table class="table ">
   <thead class="heading">
     <tr>
       <th style="font-size: 15px;">S.no</th>
-      <th style="font-size: 15px;">Student</th>
       <th style="font-size: 15px;">Reg No</th>
       <th style="font-size: 15px;">Name</th>
-      <th style="font-size: 15px;">Marks</th>
-      <th style="font-size: 15px;">Father's rank</th>
+      <th style="font-size: 15px;">Marks <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 0 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 1 %}">▼</a></th>
+            <th style="font-size: 15px;">Attendence <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 2 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 3 %}">▼</a></th>
+      <th style="font-size: 15px;">Father's rank <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 4 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 5 %}">▼</a></th>
 
 
     </tr>
@@ -80,10 +111,10 @@ tr[data-href]
   	
     <tr  data-href="{% url 'applied_application' x.id y.id  %}">
       <td style="font-size: 20px;"></td>
-      <td><img class="img-responsive img-rounded" src="{{ x.profile.image.url }}" alt="profile pic" style="height: 100px; width: 100px;"></td>
       <td style="font-size: 20px;">{{x.username}}</td>
       <td style="font-size: 20px;">{{x.first_name}}</td>
       <td style="font-size: 20px;">{{x.profile.marks}}</td>
+      <td style="font-size: 20px;">{{x.profile.attendence}}</td>
       <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
 
 
@@ -94,7 +125,7 @@ tr[data-href]
        </tbody>
 </table>
 
-
+</div>
 
 
 {% endblock %}

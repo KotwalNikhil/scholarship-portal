@@ -169,8 +169,7 @@
                     
                         <div>
                           {% if application.applied_document_last_sem %}
-                          <p class="text-dark">{{application.applied_document_last_sem.url}}</p>
-                          <img class="img-responsive img-rounded" src="{{application.applied_document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                         <a href="{{application.applied_document_last_sem.url}}"> <img class="img-responsive img-rounded" src="{{application.applied_document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;"></a>
                           {% else %}
                           <p class="text-danger">document not uploaded</p>
                           {% endif %}
@@ -182,8 +181,7 @@
                         <label class="form-control-label" >class 12 marksheet </label>
                         <div>
                        {% if application.applied_document12 %}
-                           <p class="text-dark"> {{application.applied_document12.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
+                           <a href="{{application.applied_document12.url}}"><img class="img-responsive img-rounded" src="{{application.applied_document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;"></a>
                         {% else %}
                             <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -196,8 +194,7 @@
                         <label class="form-control-label" >class 10 marksheet</label>
                         <div>
                        {% if application.applied_document10 %}
-                           <p> {{application.applied_document10.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
+                           <a href="{{application.applied_document10.url}}"><img class="img-responsive img-rounded" src="{{application.applied_document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;"></a>
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -209,8 +206,7 @@
                         <label class="form-control-label" >Father's Identity card</label>
                         <div>
                        {% if application.applied_father_id %}
-                           <p> {{application.applied_father_id.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;">
+                           <a href="{{application.applied_father_id.url}}"><img class="img-responsive img-rounded" src="{{application.applied_father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;"></a>
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -222,8 +218,7 @@
                         <label class="form-control-label" >Student's Identity/Dependent card</label>
                         <div>
                        {% if application.applied_student_id %}
-                           <p> {{application.applied_student_id.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_student_id.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                           <a href="{{application.applied_student_id.url}}"><img class="img-responsive img-rounded" src="{{application.applied_student_id.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;"></a>
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -235,8 +230,7 @@
                         <label class="form-control-label" >Extra 1</label>
                         <div>
                        {% if application.applied_extra1 %}
-                           <p> {{application.applied_extra1.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_extra1.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                          <a href="{{application.applied_extra1.url}}"></a> <img class="img-responsive img-rounded" src="{{application.applied_extra1.url}}" alt="extra 1" style="height: 200px; width: 200px;"></a>
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}
@@ -248,8 +242,7 @@
                         <label class="form-control-label" >Extra 2</label>
                         <div>
                        {% if application.applied_extra2 %}
-                           <p> {{application.applied_extra2.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{application.applied_extra2.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
+                          <a href="{{application.applied_extra2.url}}"></a> <img class="img-responsive img-rounded" src="{{application.applied_extra2.url}}" alt="extra 2" style="height: 200px; width: 200px;"></a>
                         {% else %}
                            <p class="text-danger">document not uploaded</p>
                         {% endif %}

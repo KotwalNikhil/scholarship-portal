@@ -5,12 +5,77 @@ from account import url
 from .form import add_scholarship_form
 from django.contrib import messages
 from .models import application_table,scholarship
-from account.models import staff
+from account.models import staff,profile
 from django.contrib.auth.models import User, auth
 from datetime import date
+
+from account.models import student
+from .resources import UserResource
+from tablib import Dataset
+from .models import scholarship
+from account.resources import profileResource
 # Create your views here.
 
 from .models import scholarship
+
+
+
+def simple_upload(request):
+    if request.method=='POST':
+        dataset = Dataset()
+        try:
+            new_user = request.FILES['myfile']
+        except:
+            new_user=None
+        try:
+            new_profile = request.FILES['myfile2']
+        except:
+            new_profile=None
+
+        if  not new_user==None and new_user.name.endswith('xlsx'):
+            imported_data = dataset.load(new_user.read(), format='xlsx')
+            for data in imported_data:
+                value = User.objects.create_user(username=data[1], first_name=data[3], email=data[2], password=data[1],is_staff=False)
+                value.save()
+
+                value1 = student(reg_no=data[1], name=data[3], email=data[2])
+                value1.save()
+            messages.success(request, 'user data imported')
+            return render(request, 'homepage/upload.html')
+
+        if  not new_profile==None and new_profile.name.endswith('xlsx'):
+            imp_profile_data = dataset.load(new_profile.read(), format='xlsx')
+            for data in imp_profile_data:
+                try:
+                    value=User.objects.get(username=data[1])
+                    user_profile_obj=profile.objects.get(user_id=value.id)
+                except:
+                    value=None
+
+                if value is not None:
+                    user_profile_obj.marks=data[2]
+                    user_profile_obj.save(update_fields=['marks'])
+                    user_profile_obj.attendence=data[3]
+                    user_profile_obj.save(update_fields=['attendence'])
+                else:
+                    messages.error(request, '1 error found')
+
+            messages.success(request, 'profile data imported')
+            return render(request, 'homepage/upload.html')
+
+        else:
+            messages.error(request, 'wrong format')
+            return render(request, 'homepage/upload.html')
+    else:
+        return render(request,'homepage/upload.html')
+
+
+
+
+
+
+
+
 def home(request):
     scholarships=scholarship.objects.all()
     today_date = date.today()
@@ -19,7 +84,11 @@ def home(request):
     for s in scholarships:
         if today_date > s.toomdate:
             expired.append(s)
+            s.active = 0
+            s.save(update_fields=['active'])
         else:
+            s.active = 1
+            s.save(update_fields=['active'])
             not_expired.append(s)
     if request.user.is_authenticated:
         return render(request,'homepage/index.html',{'expired':expired,'not_expired':not_expired})
@@ -71,7 +140,7 @@ def delete_scholarship(request,x):
     return render(request, 'homepage/index.html', {'all_scholar': scholarships})
 
 
-def show_scholarship_template(request,x):
+def show_scholarship_template(request,x,y='0'):
     # print(type(x))
     current_scholarship=scholarship.objects.get(pk=x)
     if not request.user.is_staff or request.user.is_superuser:
@@ -103,7 +172,117 @@ def show_scholarship_template(request,x):
                 app.delete()
                 continue
 
+        print(type(y))
+        if y=='0':
+            Sort_Tuple_marks_increasing(students)
+        elif y=='1':
+            Sort_Tuple_marks_decreasing(students)
+        elif y=='2':
+            Sort_Tuple_attendence_increasing(students)
+        elif y=='3':
+            Sort_Tuple_attendence_decreasing(students)
+        elif y=='4':
+            Sort_Tuple_rank(students)
+        else :
+            Sort_Tuple_rank(students,0)
+
+
         return render(request,'homepage/admin_panel.html',{'admin':admin,'students':students,'current_scholarship':current_scholarship})
+
+
+def Sort_Tuple_marks_increasing(tup):
+    # getting length of list of tuples
+    lst = len(tup)
+    for i in range(0, lst):
+
+        for j in range(0, lst - i - 1):
+            if (tup[j][0].profile.marks < tup[j + 1][0].profile.marks):
+                temp = tup[j]
+                tup[j] = tup[j + 1]
+                tup[j + 1] = temp
+    return tup
+
+def Sort_Tuple_marks_decreasing(tup):
+    # getting length of list of tuples
+    lst = len(tup)
+    for i in range(0, lst):
+
+        for j in range(0, lst - i - 1):
+            if (tup[j][0].profile.marks > tup[j + 1][0].profile.marks):
+                temp = tup[j]
+                tup[j] = tup[j + 1]
+                tup[j + 1] = temp
+    return tup
+
+def Sort_Tuple_attendence_increasing(tup):
+    # getting length of list of tuples
+    lst = len(tup)
+    for i in range(0, lst):
+
+        for j in range(0, lst - i - 1):
+            if (tup[j][0].profile.attendence < tup[j + 1][0].profile.attendence):
+                temp = tup[j]
+                tup[j] = tup[j + 1]
+                tup[j + 1] = temp
+    return tup
+
+def Sort_Tuple_attendence_decreasing(tup):
+    # getting length of list of tuples
+    lst = len(tup)
+    for i in range(0, lst):
+
+        for j in range(0, lst - i - 1):
+            if (tup[j][0].profile.attendence > tup[j + 1][0].profile.attendence):
+                temp = tup[j]
+                tup[j] = tup[j + 1]
+                tup[j + 1] = temp
+    return tup
+
+
+def Sort_Tuple_rank(tup,y=1):
+
+    def place(x):
+        if x == 'Lance Naik':
+            return 0
+        elif x=='Naik':
+            return 1
+        elif x=='Hawaldar':
+            return 2
+        elif x=='Nb Subedar':
+            return 3
+        elif x=='Subedar':
+            return 4
+        elif x=='Subeder Maj':
+            return 5
+        elif x=='Officer':
+            return 6
+        else:
+            return -1
+
+
+    lst = len(tup)
+    if y==1:
+        for i in range(0, lst):
+            #print(tup[i][0].profile.id)
+            for j in range(0, lst - i - 1):
+
+                if (place(tup[j][0].profile.father_rank) > place(tup[j + 1][0].profile.attendence)):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+    else:
+        for i in range(0, lst):
+            #print(tup[i][0].profile.id)
+            for j in range(0, lst - i - 1):
+
+                if (place(tup[j][0].profile.father_rank) < place(tup[j + 1][0].profile.attendence)):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+
+    return tup
+
+
 
 def applied_application(request,x,y):
     application=application_table.objects.get(id=y)

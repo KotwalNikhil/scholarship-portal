@@ -143,63 +143,61 @@ function myFunction(x) {
                 <div class="col-8">
                   <h3 class="mb-0">My account</h3>
                 </div>
-                <div class="col-4 text-right">
-                  <button onclick="myFunction('demo')" class="btn btn btn-primary">Edit</button>
-                </div>
+                <!--<div class="col-4 text-right">-->
+                  <!--<button onclick="myFunction('demo')" class="btn btn btn-primary">Edit</button>-->
+                <!--</div>-->
               </div>
             </div>
             <div class="card-body">
               <!--- udation form-->
               <div class="row">
-                <div class="col-md-lg-6">
+
                   
-                  <div class="container">
-                    <div class="formwrapper">
-                       <form class="formitself" id="demo" method="POST" enctype="multipart/form-data" style="display: none;">
-                        <div class="page-header">
-                    <h1>Edit your profile here</h1>
-                  </div>
-                          {% csrf_token %}
 
-                          {{ p_form.as_p }}
-
-                          <input class="submitbtn" type="submit"  value="update info">
-                       </form>
-                    </div>
-                  </div>
-                </div>
-             </div>
                              <hr class="my-4" />
 
         <!--- udation form-->
-              <form>
+              <form action="{% url 'profile' %}" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
                 <h6 class="heading mb-4"><mark>User information</mark></h6>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-username">REG NO.</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="{{user.username}}" value="{{user.username}}"disabled>
+                        <!--<label class="form-control-label" for="input-username">REG NO.</label>-->
+                          <label class="form-control-label" for="{{pro_form.username.id_for_label}}">Username</label>
+                        <!--<input type="text" id="input-username" class="form-control form-control-alternative" placeholder="{{user.username}}" value="{{user.username}}"disabled>-->
+                        {{pro_form.username}}
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="{{user.email}}" disabled>
+                        <label class="form-control-label" for="{{pro_form.email.id_for_label}}">Email address</label>
+                        <!--<input type="email" id="input-email" class="form-control form-control-alternative" placeholder="{{user.email}}" disabled>-->
+                          {{pro_form.email}}
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-first-name">Name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" disabled>
+                        <label class="form-control-label" for="{{pro_form.first_name.id_for_label}}">Name</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" disabled>-->
+                      {{pro_form.first_name}}
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-last-name">Father's rank</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="{{user.last_name}}" value="{{user.profile.father_rank}}"disabled>
+                        <label class="form-control-label" for="{{pro2_form.father_rank_for_label}}">Father's rank</label>
+                        {{pro2_form.father_rank}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                       <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_name_for_label}}">Father's name</label>
+                        {{pro2_form.father_name}}
                       </div>
                     </div>
                   </div>
@@ -210,34 +208,38 @@ function myFunction(x) {
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-username">Last year marks(SGPA)</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative"  value="{{user.profile.marks}}" disabled>
+                        <label class="form-control-label" for="{{pro2_form.marks.id_form_label}}">Marks</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.marks}}
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-email">Class</label>
-{% if user.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP"> {% endif %}
-      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}
-      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
-      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %}                       </div>
+                        <label class="form-control-label" for="{{pro2_form.branch.id_for_label}}">Branch</label>
+                          {{pro2_form.branch}}
+{% if pro2_form.branch == 1 %}COMP {% endif %}
+      <!--{% if pro2_form.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}-->
+      {% if pro2_form.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
+      <!--{% if pro2_form.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %}                       </div>-->
                     </div>
+                  </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-first-name">Roll No.</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >
+                        <label class="form-control-label" for="{{pro2_form.roll_no.id_form_label}}">Roll No.</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.roll_no}}
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-last-name">Attendence</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative"  value="">
+                        <label class="form-control-label" for="{{pro2_form.attendence.id_form_label}}">Attendence</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.attendence}}
                       </div>
                     </div>
-                  </div>
-                </div>
+
                 <!---documents--->
                                 <hr class="my-4" />
 
@@ -245,77 +247,115 @@ function myFunction(x) {
 
                 <div class="pl-lg-12">
                   <div class="row">
+
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" >Last year marksheet   </label>
-                    
+                        <label class="{{pro2_form.image.id_for_label}}" >Profile picture</label>
+                        {{pro2_form.image}}
+                          <br><br>
+                        <div>
+                          {% if user.profile.image %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.image.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                    </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="{{pro2_form.document_last_sem.id_for_label}}" >Last year marksheet</label>
+                        {{pro2_form.document_last_sem}}
+                          <br><br>
                         <div>
                           {% if user.profile.document_last_sem %}
-                          <p class="text-dark">{{user.profile.document_last_sem.url}}</p>
+                          <p>current</p>
                           <img class="img-responsive img-rounded" src="{{user.profile.document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
                           {% else %}
                           <p class="text-danger">document not uploaded</p>
                           {% endif %}
-                      </div>
+                        </div>
                     </div>
-                  </div>
+                        <hr>
+                    </div>
+
+
+                        <div class="col-lg-12">
+                      <div class="form-group">
+                      <label class="{{pro2_form.document10.id_for_label}}" >Class 10th marksheet</label>
+                        {{pro2_form.document10}}
+                          <br><br>
+                        <div>
+                          {% if user.profile.document10 %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                        <hr>
+                    </div>
+
                          <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" >class 12 marksheet </label>
+                      <label class="{{pro2_form.document12.id_for_label}}" >Class 12th Marksheet</label>
+                        {{pro2_form.document12}}
+                          <br><br>
                         <div>
-                       {% if user.profile.document12 %}
-                           <p class="text-dark"> {{user.profile.document12.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document12.url}}" alt="class 12 marksheet" style="height: 200px; width: 200px;">
-                        {% else %}
-                            <p class="text-danger">document not uploaded</p>
-                        {% endif %}
+                          {% if user.profile.document12 %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.document12.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
                       </div>
-                      </div>
+                             <hr>
                     </div>
                   
+                
+
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" >class 10 marksheet</label>
+                      <label class="{{pro2_form.father_id.id_for_label}}" >Father Identity Card</label>
+                        {{pro2_form.father_id}}
+                          <br><br>
                         <div>
-                       {% if user.profile.document10 %}
-                           <p> {{user.profile.document10.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="class 10 marksheet" style="height: 200px; width: 200px;">
-                        {% else %}
-                           <p class="text-danger">document not uploaded</p>
-                        {% endif %}
+                          {% if user.profile.father_id %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.father_id.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
                       </div>
-                      </div>
+                        <hr>
                     </div>
+
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label class="form-control-label" >Father's Identity card</label>
+                       <label class="{{pro2_form.student_id.id_for_label}}" >Student's identity Card</label>
+                        {{pro2_form.student_id}}
+                          <br><br>
                         <div>
-                       {% if user.profile.father_id %}
-                           <p> {{user.profile.document10.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.father_id.url}}" alt="Father's Identity card" style="height: 200px; width: 200px;">
-                        {% else %}
-                           <p class="text-danger">document not uploaded</p>
-                        {% endif %}
+                          {% if user.profile.student_id %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{user.profile.student_id.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
                       </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-12">
-                      <div class="form-group">
-                        <label class="form-control-label" >Student's Identity/Dependent card</label>
-                        <div>
-                       {% if user.profile.student_id %}
-                           <p> {{user.profile.student_id.url}}</p>
-                           <img class="img-responsive img-rounded" src="{{user.profile.document10.url}}" alt="Student's Identity/Dependent card" style="height: 200px; width: 200px;">
-                        {% else %}
-                           <p class="text-danger">document not uploaded</p>
-                        {% endif %}
-                      </div>
-                      </div>
+                        
                     </div>
                     
               
               </div>
-                              <hr class="my-4" />
+              <hr class="my-4" />
 
                 <!-- Address -->
                 <h6 class="heading mb-4"><mark>Contact information</mark></h6>
@@ -323,41 +363,44 @@ function myFunction(x) {
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-address">Permanent Address</label>
-                        <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{user.profile.address}}" type="text">
+                        <label class="form-control-label" for="{{pro2_form.address.id_for_label}}">Permanent Address</label>
+                        <!--<input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{user.profile.address}}" type="text">-->
+                        {{pro2_form.address}}
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">State</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="eg. Udhampur" value="">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Pin code</label>
-                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="eg- 182121">
-                      </div>
-                    </div>
-                  </div>
+                  <!--<div class="row">-->
+                    <!--<div class="col-lg-4">-->
+                      <!--<div class="form-group">-->
+                        <!--<label class="form-control-label" for="input-city">City</label>-->
+                        <!--<input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-4">-->
+                      <!--<div class="form-group">-->
+                        <!--<label class="form-control-label" for="input-country">State</label>-->
+                        <!--<input type="text" id="input-country" class="form-control form-control-alternative" placeholder="eg. Udhampur" value="">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-lg-4">-->
+                      <!--<div class="form-group">-->
+                        <!--<label class="form-control-label" for="input-country">Pin code</label>-->
+                        <!--<input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="eg- 182121">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
                 </div>
                 <hr class="my-4" />
                 <!-- Description -->
-                <h6 class="heading mb-4"><mark>About me</mark></h6>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
-                  </div>
-                </div>
+                <!--<h6 class="heading mb-4"><mark>About me</mark></h6>-->
+                <!--<div class="pl-lg-4">-->
+                  <!--<div class="form-group">-->
+                    <!--<label>About Me</label>-->
+                    <!--<textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>-->
+                  <!--</div>-->
+                <!--</div>-->
+                    <!--description ends-->
+                    <input type="submit" class="btn btn-primary" value="Update">
               </form>
             </div>
           </div>

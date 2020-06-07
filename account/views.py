@@ -7,31 +7,60 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 
-from .form import profile_update_form
+#from .form import profile_update_form
 from django.core.mail import send_mail
 from django.conf import settings
 from homepage.models import application_table,scholarship
+from .form import Profile_Form,Profile2_form
 
 
+# def user_profile(request):
+#     if request.method == 'POST':
+#         p_form = profile_update_form(request.POST,request.FILES,instance=request.user.profile)
+#         if p_form.is_valid():
+#             p_form.save()
+#             messages.success(request, 'profile updated succesfully')
+#             #return redirect(request.META['HTTP_REFERER'])#for previous page with refresh
+#
+#
+#     p_form = profile_update_form(instance=request.user.profile)
+#
+#     ###########################
+#     applications=application_table.objects.all()
+#     scholarships=[]
+#     for app in applications:
+#         print(type(app.user_id),type(request.user.id))
+#         if  app.user_id==request.user.id:
+#             scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
+#     return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
 def user_profile(request):
     if request.method == 'POST':
-        p_form = profile_update_form(request.POST,request.FILES,instance=request.user.profile)
-        if p_form.is_valid():
-            p_form.save()
+        pro_form = Profile_Form(request.POST,request.FILES,instance=request.user)
+        pro2_form = Profile2_form(request.POST,request.FILES,instance=request.user.profile)
+        print('pro2',pro2_form.is_valid())
+        print('pro',pro_form.is_valid())
+        if pro2_form.is_valid() and pro_form.is_valid():
+            pro_form.save()
+            pro2_form.save()
             messages.success(request, 'profile updated succesfully')
-            return render(request,'homepage/profile.html')
-
+            return redirect('profile')
     else :
-        p_form = profile_update_form(instance=request.user.profile)
+        pro_form = Profile_Form(instance=request.user)
+        pro2_form = Profile2_form(instance=request.user.profile)
 
-        ###########################
+        # scholarships that the user hava applied
+
         applications=application_table.objects.all()
         scholarships=[]
         for app in applications:
             print(type(app.user_id),type(request.user.id))
             if  app.user_id==request.user.id:
                 scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
-        return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
+
+        # end of scholarship that user have applied
+        return render(request,'homepage/profile.html',{'pro_form':pro_form,'pro2_form':pro2_form,'scholarships':scholarships})
+
+
 
 def sendemail(recipient_list,emp,name):
     subject = 'Congratulations '+ name
@@ -126,7 +155,7 @@ def admin_register(request):
                     return render(request, 'login/admin_register.html', {'all_staffs': all_staffs})
 
             user = User.objects.create_user(first_name=fname,username=empno,password="12345",email=email,is_staff=True)
-            user.save();
+            user.save()
 
             staf=staff.objects.create(name=fname,email=email,emp_no=empno,branch=admin_branch)
             staf.save()

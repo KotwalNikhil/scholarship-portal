@@ -5,6 +5,15 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+RANK_COHICES = (
+    ('Lance Naik','Lance Naik'),
+    ('Naik','Naik'),
+    ('Hawaldar','Hawaldar'),
+    ('Nb Subedar','Nb Subedar'),
+    ('Subedar','Subedar'),
+    ('Subeder Maj','Subeder Maj'),
+    ('Officer','Officer'),
+)
 
 
 # Create your models here.
@@ -36,8 +45,9 @@ class profile(models.Model):
     division=models.IntegerField(default=0)
     name = models.CharField(max_length=20,default='')
     marks=models.IntegerField(default=0,blank=True,null=True)
-    father_rank=models.CharField(max_length=20,default='',blank=True,null=True)
+    father_rank=models.CharField(max_length=50,choices=RANK_COHICES,default='Officer')
     father_name=models.CharField(max_length=30,default='',blank=True,null=True)
+    attendence=models.IntegerField(default=0,blank=True,null=True)
 
 
     image= models.ImageField(upload_to='pics/profile_pics',default='pics/profile_pics/default.png')

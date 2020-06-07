@@ -49,9 +49,9 @@
             <div class="media align-items-center">
               <span >
                 {% if user.is_authenticated %}
-                <img class="rounded-circle" alt="Image placeholder" src="{{user.profile.image.url}}" style="size: height:40px;width: 50px;">
+                <img class="rounded-circle" alt="Image placeholder" src="{{user.profile.image.url}}" style=" height:50px;width: 50px;">
                 {% else %}
-                <a href="{% url 'user_login' %}"><img class="rounded-circle" alt="Image placeholder" style="size: height:40px;width: 50px;" src="https://alumni.modyuniversity.ac.in/application/static/images/profile-icon.png"></a>
+                <a href="{% url 'user_login' %}"><img class="rounded-circle" alt="Image placeholder" style=" height:50px;width: 50px;" src="https://alumni.modyuniversity.ac.in/application/static/images/profile-icon.png"></a>
                  {% endif %}
               </span>
 
@@ -138,6 +138,18 @@
               <i class="ni ni-pin-3 text-orange"></i> Add Scholarship
             </a>
           </li>
+                    {% elif user.is_staff %}
+                    <li class="nav-item">
+            <a class="nav-link " href="{% url 'simple_upload' %}">
+              <i class="ni ni-pin-3 text-orange"></i> Import data 
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'user_register' %}">
+              <i class="ni ni-pin-3 text-orange"></i> Register student
+            </a>
+          </li>
+
           {% endif %}
 
 
@@ -247,9 +259,9 @@
               <div class="media align-items-center">
                 <span >
                   {% if user.is_authenticated %}
-                <img class="rounded-circle" alt="Image placeholder" src="{{user.profile.image.url}}" style="size: height:40px;width: 50px;">
+                <img class="rounded-circle" alt="Image placeholder" src="{{user.profile.image.url}}" style=" height:50px;width: 50px;">
                 {% else %}
-                  <a href="{% url 'user_login' %}"><img class="rounded-circle" alt="Image placeholder" style="size: height:40px;width: 50px;" src="https://alumni.modyuniversity.ac.in/application/static/images/profile-icon.png"></a>
+                  <a href="{% url 'user_login' %}"><img class="rounded-circle" alt="Image placeholder" style=" height:50px;width: 50px;" src="https://alumni.modyuniversity.ac.in/application/static/images/profile-icon.png"></a>
                 {% endif %}
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">

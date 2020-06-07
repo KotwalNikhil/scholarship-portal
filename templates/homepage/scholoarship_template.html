@@ -214,7 +214,7 @@ function myFunction(x) {
                                 <span></span>
                             </div>
                             <div class="ends">
-                                <strong>ENDS</strong> {{current_scholarship.fromdate}} 
+                                <strong>ENDS</strong> {{current_scholarship.toomdate}} 
                             </div>
                         </div>
 
@@ -229,7 +229,7 @@ function myFunction(x) {
                         <div class="stats">
 
                             <div>
-                               <h5><a style="color: #FF0000; font-size: 15px;" href="{% url 'show-pdf' current_scholarship.id %}" ><bold>check our brouchere </bold></a></h5>
+                               <a style="color: #FF0000; font-size: 15px;" href="{% url 'show-pdf' current_scholarship.id %}" class="Cbtn Cbtn-danger">Download brouchre</a>
                             </div>                     
 
                         </div>
@@ -241,10 +241,14 @@ function myFunction(x) {
                             </div>
 
                         </div>
+                      {% if not user.is_superuser and current_scholarship.active %}
 
-                        <div class="foot">
-                            <a href="{% url 'show-pdf' current_scholarship.id %}" class="Cbtn Cbtn-danger">Download brouchre</a>
+                        <div class="stats">
+                          <div>
+                            <a href="{% url 'application_form' current_scholarship.id  %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
+                          </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div> 
             </div>
@@ -373,10 +377,32 @@ function myFunction(x) {
       </div>
     </div>
                              <hr class="my-4" />
-{% else %}
-<div class="footer text-center">
-  <a href="{% url 'application_form' current_scholarship.id  %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
-</div>
 {% endif %}
+
+<div class="footer text-center">
+    <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Nikhil</a>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-between">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Scholarship team AIT</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+</div>
 
  {% endblock %}
