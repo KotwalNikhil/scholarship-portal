@@ -43,6 +43,7 @@ class profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     branch=models.IntegerField(default=0)
     division=models.IntegerField(default=0)
+    mobile = models.IntegerField(blank=True,null=True)
     name = models.CharField(max_length=20,default='')
     marks=models.IntegerField(default=0,blank=True,null=True)
     father_rank=models.CharField(max_length=50,choices=RANK_COHICES,default='Officer')

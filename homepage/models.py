@@ -16,9 +16,11 @@ class scholarship(models.Model):
     fromdate=models.DateField(null=True)
     toomdate = models.DateField(null=True)
 
+
 class application_table(models.Model):
     scholarship_id=models.IntegerField(default=0)
     user_id=models.IntegerField(default=0)
+    status = models.IntegerField(default=2,blank=True,null=True)
     applied_student_id = models.FileField(upload_to='applications/student_id',blank=True,null=True)
     applied_father_id = models.FileField(upload_to='applications/father_id',blank=True,null=True)
     applied_document_last_sem = models.FileField(upload_to='applications/document_last_sem',blank=True,null=True)

@@ -139,6 +139,12 @@ def delete_scholarship(request,x):
     scholarships=scholarship.objects.all()
     return render(request, 'homepage/index.html', {'all_scholar': scholarships})
 
+def change_status(request,x,y):
+    s = application_table.objects.get(pk=x)
+    s.status = y
+    s.save(update_fields=['status'])
+    messages.success(request, 'application status updated successfully')
+    return redirect(request.META['HTTP_REFERER'])
 
 def show_scholarship_template(request,x,y='0'):
     # print(type(x))
@@ -172,7 +178,7 @@ def show_scholarship_template(request,x,y='0'):
                 app.delete()
                 continue
 
-        print(type(y))
+        #print(type(y))
         if y=='0':
             Sort_Tuple_marks_increasing(students)
         elif y=='1':

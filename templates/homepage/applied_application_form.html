@@ -288,14 +288,18 @@
                 </div>
                 <hr class="my-4" />
                 <!-- Description -->
-                <h6 class="heading mb-4"><mark>About me</mark></h6>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
-                  </div>
-                </div>
+               
               </form>
+            </div>
+            <div class="row">
+              <div class="col-6">
+             <a href="{% url 'change_status' application.id 1 %}"><button type="button" class="btn btn-success float-right">Select</button></a>
+               
+              </div>
+              <div class="col-6">
+               <a href="{% url 'change_status' application.id 0 %}"> <button type="button" class="btn btn-danger">Reject</button></a>
+
+              </div>
             </div>
           </div>
         </div>
