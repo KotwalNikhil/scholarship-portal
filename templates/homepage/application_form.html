@@ -79,9 +79,9 @@
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Class</label>
                          {% if user.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP"> {% endif %}
-      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}
-      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
-      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %} 
+      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="IT"> {% endif %}
+      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="ENTC"> {% endif %}
+      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="MECH"> {% endif %} 
                       </div>
                     </div>
                   </div>
@@ -204,13 +204,7 @@
 
                 <!-- Description -->
                   <hr class="my-4" />
-                <h6 class="heading-small text-muted mb-4">About me</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
-                  </div>
-                </div>
+                
                  <button type="Submit" class="btn btn-primary">Submit</button>
 
               </form>

@@ -2,7 +2,26 @@
 
 {% block includefiles %}
 <style>
+.table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
 
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+  .table td {
+  font-size: 40px;
+  vertical-align: bottom;
+}
+ .heading tr,th{
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    color: black;
+    font-size: 40px;
+  }
+  tr:hover {background-color:#f2f2f2;}
 
   .formitself{
     background-color: white;
@@ -92,7 +111,7 @@ function myFunction(x) {
               <div class="col-lg-3 order-lg-2 mt-5">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="static/assets/img/brand/scholarship.png" class="rounded-circle" alt="sholar">
+                    <img src="/static/homepage/static/assets/img/brand/scholarship.png" class="rounded-circle" alt="sholar">
                   </a>
                 </div>
               </div>
@@ -116,13 +135,19 @@ function myFunction(x) {
 
     </tr>
   </thead>
-  {% for x in scholarships %}
+  {% for x,y in scholarships %}
   <tbody>
     
     <tr>
-      <th scope="row">1</th>
+      <td ></td>
       <td>{{x.title}}</td>
-      
+      {% if y == 2 %}
+      <td style="color: orange;">under observation</td>
+      {% elif y == 1 %}
+      <td style="color: green;">Selected</td>
+      {% else %}
+      <td style="color:red;">Rejected</td>
+      {% endif %}
     </tr>
   </tbody>
       {% endfor %}
@@ -213,17 +238,20 @@ function myFunction(x) {
                         {{pro2_form.marks}}
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="{{pro2_form.branch.id_for_label}}">Branch</label>
-                          {{pro2_form.branch}}
-{% if pro2_form.branch == 1 %}COMP {% endif %}
-      <!--{% if pro2_form.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="IT"> {% endif %}-->
-      {% if pro2_form.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="ENTC"> {% endif %}
-      <!--{% if pro2_form.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="MECH"> {% endif %}                       </div>-->
+                        {{pro2_form.branch}}                       
                     </div>
+                  </div> -->
+                  <div class="col-lg-6">
+                   <label class="form-control-label" >Branch</label>
+                  {% if user.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP" readonly> {% endif %}
+      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="IT" readonly> {% endif %}
+      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="ENTC" readonly> {% endif %}
+      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="MECH" readonly> {% endif %} 
                   </div>
-                  </div>
+                </div>
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">

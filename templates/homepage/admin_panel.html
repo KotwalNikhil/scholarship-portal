@@ -101,7 +101,7 @@ tr[data-href]
       <th style="font-size: 15px;">Marks <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 0 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 1 %}">▼</a></th>
             <th style="font-size: 15px;">Attendence <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 2 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 3 %}">▼</a></th>
       <th style="font-size: 15px;">Father's rank <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 4 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 5 %}">▼</a></th>
-
+      <th style="font-size: 15px;">Status</th>
 
     </tr>
   </thead>
@@ -116,7 +116,13 @@ tr[data-href]
       <td style="font-size: 20px;">{{x.profile.marks}}</td>
       <td style="font-size: 20px;">{{x.profile.attendence}}</td>
       <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
-
+      {% if y.status == 2 %}
+      <td style="color: orange;">under observation</td>
+      {% elif y.status == 1 %}
+      <td style="color: green;">Selected</td>
+      {% else %}
+      <td style="color:red;">Rejected</td>
+      {% endif %}
 
     </tr>
 

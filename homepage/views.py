@@ -18,6 +18,24 @@ from account.resources import profileResource
 
 from .models import scholarship
 
+# mapping of father_rank for sorting porpose
+def place(x):
+    if x == 'Lance Naik':
+        return 0
+    elif x == 'Naik':
+        return 1
+    elif x == 'Hawaldar':
+        return 2
+    elif x == 'Nb Subedar':
+        return 3
+    elif x == 'Subedar':
+        return 4
+    elif x == 'Subeder Maj':
+        return 5
+    elif x == 'Officer':
+        return 6
+    else:
+        return -1
 
 
 def simple_upload(request):
@@ -206,6 +224,16 @@ def Sort_Tuple_marks_increasing(tup):
                 temp = tup[j]
                 tup[j] = tup[j + 1]
                 tup[j + 1] = temp
+            elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                if(tup[j][0].profile.attendence < tup[j + 1][0].profile.attendence):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+                elif(tup[j][0].profile.attendence == tup[j + 1][0].profile.attendence):
+                    if (place(tup[j][0].profile.father_rank) < place(tup[j + 1][0].profile.father_rank)):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
     return tup
 
 def Sort_Tuple_marks_decreasing(tup):
@@ -218,6 +246,16 @@ def Sort_Tuple_marks_decreasing(tup):
                 temp = tup[j]
                 tup[j] = tup[j + 1]
                 tup[j + 1] = temp
+            elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                if (tup[j][0].profile.attendence > tup[j + 1][0].profile.attendence):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+                elif (tup[j][0].profile.attendence == tup[j + 1][0].profile.attendence):
+                    if (place(tup[j][0].profile.father_rank) > place(tup[j + 1][0].profile.father_rank)):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
     return tup
 
 def Sort_Tuple_attendence_increasing(tup):
@@ -230,6 +268,16 @@ def Sort_Tuple_attendence_increasing(tup):
                 temp = tup[j]
                 tup[j] = tup[j + 1]
                 tup[j + 1] = temp
+            elif (tup[j][0].profile.attendence == tup[j + 1][0].profile.attendence):
+                if (tup[j][0].profile.marks < tup[j + 1][0].profile.marks):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+                elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                    if (place(tup[j][0].profile.father_rank) < place(tup[j + 1][0].profile.father_rank)):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
     return tup
 
 def Sort_Tuple_attendence_decreasing(tup):
@@ -242,28 +290,20 @@ def Sort_Tuple_attendence_decreasing(tup):
                 temp = tup[j]
                 tup[j] = tup[j + 1]
                 tup[j + 1] = temp
+            elif (tup[j][0].profile.attendence == tup[j + 1][0].profile.attendence):
+                if (tup[j][0].profile.marks > tup[j + 1][0].profile.marks):
+                    temp = tup[j]
+                    tup[j] = tup[j + 1]
+                    tup[j + 1] = temp
+                elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                    if (place(tup[j][0].profile.father_rank) > place(tup[j + 1][0].profile.father_rank)):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
     return tup
 
 
 def Sort_Tuple_rank(tup,y=1):
-
-    def place(x):
-        if x == 'Lance Naik':
-            return 0
-        elif x=='Naik':
-            return 1
-        elif x=='Hawaldar':
-            return 2
-        elif x=='Nb Subedar':
-            return 3
-        elif x=='Subedar':
-            return 4
-        elif x=='Subeder Maj':
-            return 5
-        elif x=='Officer':
-            return 6
-        else:
-            return -1
 
 
     lst = len(tup)
@@ -272,19 +312,39 @@ def Sort_Tuple_rank(tup,y=1):
             #print(tup[i][0].profile.id)
             for j in range(0, lst - i - 1):
 
-                if (place(tup[j][0].profile.father_rank) > place(tup[j + 1][0].profile.attendence)):
+                if (place(tup[j][0].profile.father_rank) < place(tup[j + 1][0].profile.father_rank)):
                     temp = tup[j]
                     tup[j] = tup[j + 1]
                     tup[j + 1] = temp
+                elif (tup[j][0].profile.father_rank == tup[j + 1][0].profile.father_rank):
+                    if (tup[j][0].profile.marks < tup[j + 1][0].profile.marks):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
+                    elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                        if (place(tup[j][0].profile.attendence) < place(tup[j + 1][0].profile.attendence)):
+                            temp = tup[j]
+                            tup[j] = tup[j + 1]
+                            tup[j + 1] = temp
     else:
         for i in range(0, lst):
             #print(tup[i][0].profile.id)
             for j in range(0, lst - i - 1):
 
-                if (place(tup[j][0].profile.father_rank) < place(tup[j + 1][0].profile.attendence)):
+                if (place(tup[j][0].profile.father_rank) > place(tup[j + 1][0].profile.father_rank)):
                     temp = tup[j]
                     tup[j] = tup[j + 1]
                     tup[j + 1] = temp
+                elif (tup[j][0].profile.father_rank == tup[j + 1][0].profile.father_rank):
+                    if (tup[j][0].profile.marks > tup[j + 1][0].profile.marks):
+                        temp = tup[j]
+                        tup[j] = tup[j + 1]
+                        tup[j + 1] = temp
+                    elif (tup[j][0].profile.marks == tup[j + 1][0].profile.marks):
+                        if (place(tup[j][0].profile.attendence) > place(tup[j + 1][0].profile.attendence)):
+                            temp = tup[j]
+                            tup[j] = tup[j + 1]
+                            tup[j + 1] = temp
 
     return tup
 

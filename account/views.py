@@ -53,9 +53,11 @@ def user_profile(request):
         applications=application_table.objects.all()
         scholarships=[]
         for app in applications:
-            print(type(app.user_id),type(request.user.id))
+            #print(type(app.user_id),type(request.user.id))
             if  app.user_id==request.user.id:
-                scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
+                print(type(app.status))
+                # a tuple of (current scholarship and its status )
+                scholarships.append((scholarship.objects.get(pk=app.scholarship_id),app.status))
 
         # end of scholarship that user have applied
         return render(request,'homepage/profile.html',{'pro_form':pro_form,'pro2_form':pro2_form,'scholarships':scholarships})
