@@ -11,39 +11,24 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.conf import settings
 from homepage.models import application_table,scholarship
-from .form import Profile_Form,Profile2_form
+from .form import Profile_Form,Profile2_form,Profile2_form_for_admin_work,Profile_Form_for_admin_work
 
 
-# def user_profile(request):
-#     if request.method == 'POST':
-#         p_form = profile_update_form(request.POST,request.FILES,instance=request.user.profile)
-#         if p_form.is_valid():
-#             p_form.save()
-#             messages.success(request, 'profile updated succesfully')
-#             #return redirect(request.META['HTTP_REFERER'])#for previous page with refresh
-#
-#
-#     p_form = profile_update_form(instance=request.user.profile)
-#
-#     ###########################
-#     applications=application_table.objects.all()
-#     scholarships=[]
-#     for app in applications:
-#         print(type(app.user_id),type(request.user.id))
-#         if  app.user_id==request.user.id:
-#             scholarships.append(scholarship.objects.get(pk=app.scholarship_id))
-#     return render(request,'homepage/profile.html',{'p_form':p_form,'scholarships':scholarships})
 def user_profile(request):
     if request.method == 'POST':
         pro_form = Profile_Form(request.POST,request.FILES,instance=request.user)
         pro2_form = Profile2_form(request.POST,request.FILES,instance=request.user.profile)
-        print('pro2',pro2_form.is_valid())
-        print('pro',pro_form.is_valid())
+        #print('pro2',pro2_form.is_valid())
+        #print('pro',pro_form.is_valid())
         if pro2_form.is_valid() and pro_form.is_valid():
             pro_form.save()
             pro2_form.save()
             messages.success(request, 'profile updated succesfully')
             return redirect('profile')
+        else:
+            messages.error(request, 'Error.Check the file size or format ,it should not exceed 1 MB')
+            return redirect('profile')
+
     else :
         pro_form = Profile_Form(instance=request.user)
         pro2_form = Profile2_form(instance=request.user.profile)
@@ -55,18 +40,67 @@ def user_profile(request):
         for app in applications:
             #print(type(app.user_id),type(request.user.id))
             if  app.user_id==request.user.id:
-                print(type(app.status))
+                #print(type(app.status))
                 # a tuple of (current scholarship and its status )
                 scholarships.append((scholarship.objects.get(pk=app.scholarship_id),app.status))
 
         # end of scholarship that user have applied
         return render(request,'homepage/profile.html',{'pro_form':pro_form,'pro2_form':pro2_form,'scholarships':scholarships})
 
+def edit_user_profile_form(request):
+    return render(request,'homepage/edit_student_profile_form.html')
+
+def show_user_profile_for_admin_work(request):
+    if request.method == 'POST':
+        regno = request.POST['regno']
+        try:
+            student_obj=User.objects.get(username=regno)
+        except:
+            messages.error(request, 'Invalid Registration Number, It may not be registered ')
+            return redirect(request.META['HTTP_REFERER'])
+
+
+        pro_form = Profile_Form_for_admin_work(instance=student_obj)
+        pro2_form = Profile2_form_for_admin_work(instance=student_obj.profile)
+
+        # scholarships that the user have applied
+
+        applications = application_table.objects.all()
+        scholarships = []
+        for app in applications:
+            if app.user_id == student_obj.id:
+                scholarships.append((scholarship.objects.get(pk=app.scholarship_id), app.status))
+
+        # end of scholarship that user have applied
+        return render(request, 'homepage/profile_for_admin_work.html',
+                      {'pro_form': pro_form, 'pro2_form': pro2_form,'student_obj':student_obj, 'scholarships': scholarships})
+
+    else:
+        return render(request, 'homepage/edit_student_profile_form.html')
+
+
+def edit_user_profile_for_admin_work(request,x):
+    if request.method == 'POST':
+
+        x = User.objects.get(id=x)
+        pro_form = Profile_Form_for_admin_work(request.POST,request.FILES,instance=x)
+        pro2_form = Profile2_form_for_admin_work(request.POST,request.FILES,instance=x.profile)
+        print('pro2',pro2_form.is_valid())
+        print('pro',pro_form.is_valid())
+        if pro2_form.is_valid() and pro_form.is_valid():
+            pro_form.save()
+            pro2_form.save()
+            messages.success(request, 'profile updated succesfully')
+            return redirect(request.META['HTTP_REFERER'])
+
+    else :
+        messages.error(request, 'Error , Go back')
+        return render(request, 'homepage/edit_student_profile_form.html')
 
 
 def sendemail(recipient_list,emp,name):
     subject = 'Congratulations '+ name
-    message =  ' , You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser ,your default password is 12345 kindly login with http://127.0.0.1:8000/log/change_password and change your password ,If its not you kindly report the superuser .This is auto generated mail ,dont reply.'
+    message =  '  You have been registered as an admin with EMP no. as '+str(emp)+' by the superuser <br>,your default password is 12345 kindly login with http://127.0.0.1:8000/log/change_password and change your password <br>,If its not you kindly report the superuser .<br>This is auto generated mail ,dont reply.'
     email_from = settings.EMAIL_HOST_USER
     #recipient_list = ['nikhilkotwalcse@gmail.com',]
     send_mail( subject, message, email_from, recipient_list,fail_silently=False )
@@ -93,7 +127,7 @@ def user_login(request):
                 return redirect('/')
 
         else:
-             messages.error(request,'invalid credintials')
+             messages.error(request,'Invalid Credintials')
              return render(request, 'login/login.html',)
 
 
@@ -120,6 +154,12 @@ def user_register(request):
             else:
                 user = User.objects.create_user(first_name=fname,username=regno,password=pass1,email=email,is_staff=False)
                 user.save();
+
+                admin = staff.objects.get(emp_no=request.user.username)
+                var = admin.branch
+                user_profile_obj = profile.objects.get(user_id=user.id)
+                user_profile_obj.branch=var
+                user_profile_obj.save(update_fields=['branch'])
 
                 stu=student.objects.create(name=fname,email=email,reg_no=regno)
                 stu.save()
@@ -161,6 +201,10 @@ def admin_register(request):
 
             staf=staff.objects.create(name=fname,email=email,emp_no=empno,branch=admin_branch)
             staf.save()
+
+            s = profile.objects.get(user_id=user.id)
+            s.branch = admin_branch
+            s.save(update_fields=['branch'])
 
             reciptent_list=[email]
             sendemail(reciptent_list,empno,fname)
@@ -209,8 +253,10 @@ def change_password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request,form.user)
+            messages.success(request, 'Password changed successfully successfull')
             return redirect('/')
         else:
+            messages.error(request, 'Conditions not fullfilled')
             return redirect('change_password')
     else:
         form=PasswordChangeForm(user=request.user)

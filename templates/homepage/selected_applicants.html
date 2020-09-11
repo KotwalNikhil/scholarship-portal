@@ -1,0 +1,291 @@
+{% extends 'homepage/basic.html' %}
+
+{% block includefiles %}
+<style type="text/css">
+
+@media only screen and (max-width: 800px) {
+  #unseen table td:nth-child(2),
+  #unseen table th:nth-child(2) {display: none;}
+}
+
+@media only screen and (max-width: 640px) {
+
+  #unseen table td:nth-child(2),
+  #unseen table th:nth-child(2){display: none;}
+}
+
+
+#collapse1{
+overflow-x:scroll;
+margin-bottom: 7rem;
+}
+
+.table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
+
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
+ .table td {
+  font-size: 40px;
+  vertical-align: bottom;
+}
+ .heading tr,th{
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    color: black;
+    background-color: white;
+    font-size: 40px;
+  }
+  tr:hover {background-color:#f2f2f2;}
+
+tr[data-href]
+{
+  cursor:pointer;
+}
+
+</style>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded",()=>
+  {
+    const rows=document.querySelectorAll("tr[data-href]");
+    console.log(rows);
+    rows.forEach(row =>
+    {
+      row.addEventListener("click",()=>
+      {
+        window.location.href = row.dataset.href;
+      });
+    });
+  });
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; overflow:auto;" >
+  <div class="row welcome ">
+      <div class="col-12">
+        <h2 class="title" style="font-size: 30px;">{{current_scholarship.title}} </h2>
+      </div>
+    </div>
+</div>
+<!-- <div class="container padding text-center mb-4" >
+  <h4>Sort with </h4>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" onclick="javascript:window.location.href='https://stackoverflow.com'; return false; " id="option1" autocomplete="off" checked> Marks
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Attendence
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="off"> Father rank
+  </label>
+</div>
+</div> -->
+<div id="collapse1">
+    <div class="table-caption text-center display-4">{{branch0}}</div>
+    <table class="table ">
+      <thead class="heading">
+        <tr>
+          <th style="font-size: 15px;">S.no</th>
+          <th style="font-size: 15px;">Reg No</th>
+          <th style="font-size: 15px;">Name</th>
+          <th style="font-size: 15px;">Marks</th>
+          <th style="font-size: 15px;">Attendence</th>
+          <th style="font-size: 15px;">Father's rank</th>
+          <th style="font-size: 15px;">Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for x,y in branch_one %}
+
+
+        <tr  data-href="{% url 'applied_application' x.id y.id 0 %}">
+          <td style="font-size: 20px;"></td>
+          <td style="font-size: 20px;">{{x.username}}</td>
+          <td style="font-size: 20px;">{{x.first_name}}</td>
+          <td style="font-size: 20px;">{{x.profile.marks}}</td>
+          <td style="font-size: 20px;">{{x.profile.attendence}}</td>
+          <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+          {% if y.status == 2 %}
+          <td style="color: orange;">under observation</td>
+          {% elif y.status == 1 %}
+          <td style="color: green;">Selected</td>
+          {% else %}
+          <td style="color:red;">Rejected</td>
+          {% endif %}
+
+        </tr>
+
+
+          {% endfor %}
+           </tbody>
+    </table>
+</div>
+
+
+<div id="collapse1">
+    <div class="table-caption text-center display-4">{{branch1}}</div>
+
+    <table class="table ">
+      <thead class="heading">
+        <tr>
+          <th style="font-size: 15px;">S.no</th>
+          <th style="font-size: 15px;">Reg No</th>
+          <th style="font-size: 15px;">Name</th>
+          <th style="font-size: 15px;">Marks</th>
+          <th style="font-size: 15px;">Attendence</th>
+          <th style="font-size: 15px;">Father's rank</th>
+          <th style="font-size: 15px;">Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for x,y in branch_two %}
+
+
+        <tr  data-href="{% url 'applied_application' x.id y.id 0 %}">
+          <td style="font-size: 20px;"></td>
+          <td style="font-size: 20px;">{{x.username}}</td>
+          <td style="font-size: 20px;">{{x.first_name}}</td>
+          <td style="font-size: 20px;">{{x.profile.marks}}</td>
+          <td style="font-size: 20px;">{{x.profile.attendence}}</td>
+          <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+          {% if y.status == 2 %}
+          <td style="color: orange;">under observation</td>
+          {% elif y.status == 1 %}
+          <td style="color: green;">Selected</td>
+          {% else %}
+          <td style="color:red;">Rejected</td>
+          {% endif %}
+
+        </tr>
+
+
+          {% endfor %}
+           </tbody>
+    </table>
+
+</div>
+
+
+<div id="collapse1">
+    <div class="table-caption text-center display-4">{{branch2}}</div>
+
+    <table class="table ">
+      <thead class="heading">
+        <tr>
+          <th style="font-size: 15px;">S.no</th>
+          <th style="font-size: 15px;">Reg No</th>
+          <th style="font-size: 15px;">Name</th>
+          <th style="font-size: 15px;">Marks</th>
+          <th style="font-size: 15px;">Attendence</th>
+          <th style="font-size: 15px;">Father's rank</th>
+          <th style="font-size: 15px;">Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for x,y in branch_three %}
+
+
+        <tr  data-href="{% url 'applied_application' x.id y.id 0 %}">
+          <td style="font-size: 20px;"></td>
+          <td style="font-size: 20px;">{{x.username}}</td>
+          <td style="font-size: 20px;">{{x.first_name}}</td>
+          <td style="font-size: 20px;">{{x.profile.marks}}</td>
+          <td style="font-size: 20px;">{{x.profile.attendence}}</td>
+          <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+          {% if y.status == 2 %}
+          <td style="color: orange;">under observation</td>
+          {% elif y.status == 1 %}
+          <td style="color: green;">Selected</td>
+          {% else %}
+          <td style="color:red;">Rejected</td>
+          {% endif %}
+
+        </tr>
+
+
+          {% endfor %}
+           </tbody>
+    </table>
+</div>
+
+
+<div id="collapse1">
+    <div class="table-caption text-center display-4">{{branch3}}</div>
+
+    <table class="table ">
+      <thead class="heading">
+        <tr>
+          <th style="font-size: 15px;">S.no</th>
+          <th style="font-size: 15px;">Reg No</th>
+          <th style="font-size: 15px;">Name</th>
+          <th style="font-size: 15px;">Marks</th>
+          <th style="font-size: 15px;">Attendence</th>
+          <th style="font-size: 15px;">Father's rank</th>
+          <th style="font-size: 15px;">Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for x,y in branch_four %}
+
+
+        <tr  data-href="{% url 'applied_application' x.id y.id  0%}">
+          <td style="font-size: 20px;"></td>
+          <td style="font-size: 20px;">{{x.username}}</td>
+          <td style="font-size: 20px;">{{x.first_name}}</td>
+          <td style="font-size: 20px;">{{x.profile.marks}}</td>
+          <td style="font-size: 20px;">{{x.profile.attendence}}</td>
+          <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+          {% if y.status == 2 %}
+          <td style="color: orange;">under observation</td>
+          {% elif y.status == 1 %}
+          <td style="color: green;">Selected</td>
+          {% else %}
+          <td style="color:red;">Rejected</td>
+          {% endif %}
+
+        </tr>
+
+
+          {% endfor %}
+           </tbody>
+    </table>
+
+</div>
+
+
+
+              <div class="container">
+  <div class="row">
+    <div class="col-6 text-center">
+        <a href="{% url 'confirm_selection' current_scholarship.id  %}" class="btn btn-success mb-6">Confirm Selection</a>
+    </div>
+    <div class="col-6">
+               <a href="{% url 'simple_export' current_scholarship.id %}"> <button type="button" class="btn btn-primary">Export List </button></a>
+
+              </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,457 @@
+{% extends 'homepage/basic.html' %}
+
+{% block includefiles %}
+<style>
+
+.branch
+{
+  background-color: rgba(154,158,170,0.17) !important;
+}
+
+.table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
+
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+  .table td {
+  font-size: 40px;
+  vertical-align: bottom;
+}
+ .heading tr,th{
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    color: black;
+    font-size: 40px;
+  }
+  tr:hover {background-color:#f2f2f2;}
+
+  .formitself{
+    background-color: white;
+    padding: 5%;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 5px 10px grey;
+  }
+
+  .submitbtn{
+    margin: 0 auto;
+    background-color: #0c85d0;
+    padding: 2%;
+    color: white;
+    border-radius: 10%;
+  }
+
+  .submitbtn:hover{
+    background-color: #00ccff;
+  }
+
+
+</style>
+
+{% endblock %}
+
+
+    {% block content %}
+
+<script>
+function myFunction(x) {
+  var y = document.getElementById(x);
+  if(y.style.display == "block")
+  {
+    y.style.display = "none";
+  }
+  else
+  {
+    y.style.display = "block";
+  }
+
+}
+</script>
+
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-default opacity-8"></span>
+      <!-- Header container -->
+
+      <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+
+          <div class="col-lg-7 col-md-10">
+            <h3 class="text-white" >{{ student_obj.first_name }}</h3>
+            
+            <img class="img-responsive img-rounded" src="{{ student_obj.profile.image.url }}" alt="profile pic" style="height: 200px; width: 200px;">
+            <p class="text-white mt-0 mb-5">Please ask for proof before editing any data .</p>
+            
+          </div>
+          <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2 mt-5">
+                <div class="card-profile-image">
+                  <a href="#">
+                    <img src="/static/homepage/static/assets/img/brand/scholarship.png" class="rounded-circle" alt="sholar">
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card-header text-center border-0 pt-6 pt-md-6 pb-0 md-6">
+              <div class="d-flex justify-content-between">
+                <a href="#" class="btn btn-sm btn-default ">Scholarships applied</a>
+              </div>
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.no</th>
+      <th scope="col">Scholarship </th>
+      <th scope="col">Status </th>      
+
+    </tr>
+  </thead>
+  {% for x,y in scholarships %}
+  <tbody>
+    
+    <tr>
+      <td ></td>
+      <td>{{x.title}}</td>
+      {% if y == 2 %}
+      <td style="color: orange;">under observation</td>
+      {% elif y == 1 %}
+      <td style="color: green;">Selected</td>
+      {% else %}
+      <td style="color:red;">Rejected</td>
+      {% endif %}
+    </tr>
+  </tbody>
+      {% endfor %}
+
+</table>
+
+
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">My account</h3>
+                </div>
+                <!--<div class="col-4 text-right">-->
+                  <!--<button onclick="myFunction('demo')" class="btn btn btn-primary">Edit</button>-->
+                <!--</div>-->
+              </div>
+            </div>
+            <div class="card-body">
+              <!--- udation form-->
+              <div class="row">
+
+                  
+
+                             <hr class="my-4" />
+
+        <!--- udation form-->
+              <form action="{% url 'edit_user_profile_for_admin_work' student_obj.id %}" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
+                <h6 class="heading mb-4"><mark>student_obj information</mark></h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <!--<label class="form-control-label" for="input-username">REG NO.</label>-->
+                          <label class="form-control-label" for="{{pro_form.username.id_for_label}}">Username</label>
+                        <!--<input type="text" id="input-username" class="form-control form-control-alternative" placeholder="{{user.username}}" value="{{user.username}}"disabled>-->
+                        {{pro_form.username}}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro_form.email.id_for_label}}">Email address</label>
+                        <!--<input type="email" id="input-email" class="form-control form-control-alternative" placeholder="{{user.email}}" disabled>-->
+                          {{pro_form.email}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro_form.first_name.id_for_label}}">Name</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" disabled>-->
+                      {{pro_form.first_name}}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_rank_for_label}}">Father's rank</label>
+                        {{pro2_form.father_rank}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                       <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_name_for_label}}">Father's name</label>
+                        {{pro2_form.father_name}}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                       <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_name_for_label}}">Present year</label>
+                        {{pro2_form.present_year}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading mb-4"><mark>Academic information</mark></h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.marks.id_form_label}}">Marks</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.marks}}
+                      </div>
+                    </div>
+                   <!--  <div class="col-lg-6">
+                       <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.branch.id_for_label}}">Branch</label>
+                        {{pro2_form.branch}}                       
+                    </div>
+                  </div>  -->
+                  <div class="col-lg-6">
+                   <label class="form-control-label" >Branch</label>
+                  {% if student_obj.profile.branch == 1 %}
+                  <div class="form-control branch">COMP</div>
+                   {% endif %}
+      {% if student_obj.profile.branch == 2 %}<div class="form-control branch">IT</div> {% endif %}
+      {% if student_obj.profile.branch == 3 %}<div class="form-control branch">ENTC</div> {% endif %}
+      {% if student_obj.profile.branch == 4 %}<div class="form-control branch">MECH</div> {% endif %} 
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.roll_no.id_form_label}}">Roll No.</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.roll_no}}
+                      </div>
+                    </div>
+                     <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.attendence.id_form_label}}">Attendence</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative"  value="{{user.profile.roll_no}}" >-->
+                        {{pro2_form.attendence}}
+                      </div>
+                    </div>
+
+                <!---documents--->
+                                <hr class="my-4" />
+
+                <h6 class="heading  mb-4"><mark>Documents Uploaded</mark></h6>
+
+                <div class="pl-lg-12">
+                  <div class="row">
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="{{pro2_form.image.id_for_label}}" >Profile picture</label>
+                        {{pro2_form.image}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.image %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.image.url}}" alt="Profile pic " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                    </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="{{pro2_form.document_last_sem.id_for_label}}" >Last year marksheet</label>
+                        {{pro2_form.document_last_sem}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.document_last_sem %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.document_last_sem.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                    </div>
+                        <hr>
+                    </div>
+
+
+                        <div class="col-lg-12">
+                      <div class="form-group">
+                      <label class="{{pro2_form.document10.id_for_label}}" >Class 10th marksheet</label>
+                        {{pro2_form.document10}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.document10 %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.document10.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                        <hr>
+                    </div>
+
+                         <div class="col-lg-12">
+                      <div class="form-group">
+                      <label class="{{pro2_form.document12.id_for_label}}" >Class 12th Marksheet</label>
+                        {{pro2_form.document12}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.document12 %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.document12.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                             <hr>
+                    </div>
+                  
+                
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                      <label class="{{pro2_form.father_id.id_for_label}}" >Father Identity Card</label>
+                        {{pro2_form.father_id}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.father_id %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.father_id.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                       <label class="{{pro2_form.student_id.id_for_label}}" >Student's identity Card</label>
+                        {{pro2_form.student_id}}
+                          <br><br>
+                        <div>
+                          {% if student_obj.profile.student_id %}
+                          <p>current</p>
+                          <img class="img-responsive img-rounded" src="{{student_obj.profile.student_id.url}}" alt="Last year marksheet " style="height: 200px; width: 200px;">
+                          {% else %}
+                          <p class="text-danger">document not uploaded</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                        
+                    </div>
+                    
+              
+              </div>
+              <hr class="my-4" />
+
+                <!-- Address -->
+                <h6 class="heading mb-4"><mark>Contact information</mark></h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.address.id_for_label}}">Permanent Address</label>
+                        
+                        {{pro2_form.address}}
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <hr class="my-4" />
+                    <input type="submit" class="btn btn-primary" value="Update">
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- Footer -->
+      
+    </div>
+  
+
+  {% endblock %}
+  
+  <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">All rights reserved</a>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+              <li class="nav-item">
+                <a href="#" class="nav-link" target="_blank">Scholarship team AIT</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://engineertrends.com/post-your-blog/" class="nav-link" target="_blank">Want to write a Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>

@@ -1,0 +1,125 @@
+{% extends 'homepage/basic.html' %}
+{% block includefiles %}
+<style type="text/css">
+
+@media only screen and (max-width: 800px) {
+  #unseen table td:nth-child(2),
+  #unseen table th:nth-child(2) {display: none;}
+}
+
+@media only screen and (max-width: 640px) {
+
+  #unseen table td:nth-child(2),
+  #unseen table th:nth-child(2){display: none;}
+}
+
+
+#collapse1{
+overflow-x:scroll;
+margin-bottom: 7rem;
+}
+
+.table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
+
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
+ .table td {
+  font-size: 40px;
+  vertical-align: bottom;
+}
+ .heading tr,th{
+    font-family: Arial, sans-serif;
+    background-color: cornflowerblue;
+    color: black;
+    font-size: 40px;
+  }
+  tr:hover {background-color:#f2f2f2;}
+
+tr[data-href]
+{
+  cursor:pointer;
+}
+
+</style>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded",()=>
+  {
+    const rows=document.querySelectorAll("tr[data-href]");
+    console.log(rows);
+    rows.forEach(row =>
+    {
+      row.addEventListener("click",()=>
+      {
+        window.location.href = row.dataset.href;
+      });
+    });
+  });
+</script>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; overflow:auto;" >
+  <div class="row welcome ">
+      <div class="col-12">
+        <h2 class="title" style="font-size: 30px;">Computer</h2>
+      </div>
+    </div>
+</div>
+
+<div id="collapse1">
+    <div class="table-caption text-center display-4">{{branch0}}</div>
+    <table class="table ">
+      <thead class="heading">
+        <tr>
+          <th style="font-size: 15px;">S.no</th>
+          <th style="font-size: 15px;">Reg No</th>
+          <th style="font-size: 15px;">Name</th>
+          <th style="font-size: 15px;">Marks</th>
+          <th style="font-size: 15px;">Attendence</th>
+          <th style="font-size: 15px;">Father's rank</th>
+          <th style="font-size: 15px;"></th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for x,y in branch_students %}
+
+
+        <tr>
+          <td style="font-size: 20px;"></td>
+          <td style="font-size: 20px;">{{x.username}}</td>
+          <td style="font-size: 20px;">{{x.first_name}}</td>
+          <td style="font-size: 20px;">{{x.profile.marks}}</td>
+          <td style="font-size: 20px;">{{x.profile.attendence}}</td>
+          <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+          <td>
+              <a href="{% url 'delete_particular' y %}"><button class="btn btn-danger">Delete</button></a>
+          </td>
+        </tr>
+
+
+          {% endfor %}
+           </tbody>
+    </table>
+
+
+</div>
+<div class="text-center">
+ <a href="{% url 'delete_all_students' emp_no %}">
+        <button class="btn btn-danger">Delete All</button>
+</a>
+</div>
+
+{% endblock %}

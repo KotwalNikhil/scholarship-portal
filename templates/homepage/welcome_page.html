@@ -1,48 +1,116 @@
-{% extends 'homepage/basic.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block includefiles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="{% static '/assets/css/test.css' %}" rel="stylesheet" />
 
-<style >
 
-  .testimonial-group > .row {
-  overflow-x: auto;
-  white-space: nowrap;
-  flex-wrap: nowrap;
-}
-.testimonial-group > .row > .col-xl-4  {
-  display: inline-block;
-  float: none;
-}
+  <link href="{% static '/homepage/static/assets/img/brand/scholarship.png' %}" rel="icon" type="image/png">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <!-- Icons -->
+  <link href="{% static '/assets/js/plugins/nucleo/css/nucleo.css' %}" rel="stylesheet" />
+  <link href="{% static '/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static '/assets/css/argon-dashboard.css' %}" rel="stylesheet" />
 
-.card-body
-{
-  min-width: 300px;
-}
+  <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container-fluid py-2 ait-brand-container">
+		<div class="ait-brand">
+			<div class="row text-center justify-content-center">
+				<img src="{% static 'assets/img/scholarship.png' %}" alt="brand-icon" class="mx-auto img-fluid brand-image">
+				<a href="{% url 'user_login' %}" class="login-button">Login</a>
+			</div>
+			<div class="row text-center justify-content-center">
+				<h1 style="color: white;">Army Institute Of Technology</h1>
+			</div>
+			<div class="row text-center justify-content-center">
+				<h5 class="" style="color: white;">Permanently Affiliated to Savitribai Phule Pune University, NBA, NAAC with 'A' Grade Accredited</h5>
+			</div>
+		</div>
+	</div>
 
-::-webkit-scrollbar  {
-  width: 5px;
-  height:5px;
-}
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12 p-0">
 
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 5px;
-}
+					<div id="my-slider" class="carousel slide carousel-fade" data-ride = "carousel" data-interval="1000">
 
-::-webkit-scrollbar-thumb {
-  background: LightGray; 
-}
-  
 
-</style>
+						<ol class="carousel-indicators">
+							<li data-target="#my-slider" data-slide-to="0" class="active"></li>
+							<li data-target="#my-slider" data-slide-to="1"></li>
+							<li data-target="#my-slider" data-slide-to="2"></li>
+							<li data-target="#my-slider" data-slide-to="3"></li>
 
-{% endblock %}
+						</ol>
 
-{% block content %}
+						<!-- carousel content -->
+						<div class="carousel-inner">
 
-   <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8  "> 
-      <div class="container-fluid testimonial-group "> 
+							<div class="carousel-item active image1">
+								<!-- <img class="d-block w-100" src="img/bg2.jpg" alt="image2"> -->
+								<div class=" text-center">
+
+								</div>
+								<div class="carousel-caption ">
+									<h1>AIT Scholarship Portal</h1>
+								</div>
+								<div class="overlay"></div>
+							</div>
+							<div class="carousel-item image2">
+								<!-- <img class="d-block w-100" src="img/bg3.jpg" alt="image3"> -->
+								<div class="text-center">
+								</div>
+								<div class="carousel-caption ">
+								<h1>AIT Scholarship Portal</h1>
+								</div>
+								<div class="overlay"></div>
+
+							</div>
+							<div class="carousel-item image3 ">
+								<!-- <img class="d-block w-100" src="img/bg4.jpg" alt="image4"> -->
+								<div class="text-center  ">
+
+								</div>
+								<div class="carousel-caption ">
+									<h1>AIT Scholarship Portal</h1>
+								</div>
+								<div class="overlay"></div>
+							</div>
+						</div>
+						<!-- carousel content ends -->
+
+						<div class="carousel-control-prev" href="#my-slider" role="button" data-slide = "prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						</div>
+						<div class="carousel-control-next" href="#my-slider" role="button" data-slide = "next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+        <div class="header my-gradient pb-5">
+      <div class="container-fluid testimonial-group ">
           <!-- Card stats -->
+          <div class="row py-5 justify-content-center">
+              <h1 class="text-center text-white font-weight-bold">Recent Scholarships</h1>
+          </div>
                <div class="row   ">
 
       {% for i in not_expired %}
@@ -60,10 +128,10 @@
                     </div>
                   </div>
                     <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
-                  
+
                   <!-- <button type="button" class="btn btn-success btn-md" style="position:absolute;
 bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
- -->    
+ -->
                       <p style="color:green;bottom:5%;left:5%;text-transform: capitalize;"><b>{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</b></p>
                 </div>
               </div></a>
@@ -98,21 +166,17 @@ bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-
               </div></a>
             </div>
       {% endfor %}
-    
+
 
           </div>
       </div>
     </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
 
 
-
-        
-
-
-
-    <div class="td-pb-span8 td-main-content " role="main"><div class="td-ss-main-content"><div class="code-block code-block-12" style="margin: 8px 0; clear: both;"> <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3868142591853795" data-ad-slot="5684371136" data-ad-format="auto" data-full-width-responsive="true"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> </div><div class="td-page-header"><h1 class="entry-title td-page-title text-center"> <span > Scholarships 2020 of AIT </span></h1></div><div class="td-page-content "><p><b><strong>Scholarships 2020 in India @ scholarships.gov.in (National &amp; State-wise) – Apply Online:</strong> If you are looking for a complete source of information about Various Scholarships in India available in National &amp; State-Wise, then you can go through this page. Also, do not forget to bookmark (CTRL + D), so that you will not miss out on any new Scholarship that is announced officially. Through this page, we have sectioned Scholarships according to the State, Gender, Category, Post Matric, Pre Matric. In that way, candidates can check according to their needs.</p><p>Click on the Scholarship 2020, that you are interested in. And go through the total information such as the Eligibility, Important Dates to apply, Application Form availability, Benefits and all. Well, this page is the single stop source for all the candidates who are looking for the Student Scholarships 2020, <strong>Merit Scholarships 2020</strong>, Educational Scholarships 2020 and all.</p></b><h2>Past Scholarships of AIT</h2><ul><li><a href="https://www.freshersnow.com/ap-epass/"><strong>AP ePASS</strong></a></li><li><a href="https://www.freshersnow.com/bihar-scholarship/"><strong>Bihar Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dce-scholarship/"><strong>Kerala Scholarship</strong></a> – DCE Scholarship</li><li><a href="https://www.freshersnow.com/hp-epass/"><strong>Himachal Pradesh Scholarship</strong></a> – HP ePASS Scholarship Portal</li><li><a href="https://www.freshersnow.com/pmsss-jk-scholarship/"><strong>Jammu and Kashmir Scholarship</strong></a> – JK Scholarship also Known as PMSSS</li><li><a href="https://www.freshersnow.com/mahadbt-scholarship/"><strong>Maharashtra Scholarship</strong></a> – MahaDBT</li><li><a href="https://www.freshersnow.com/mp-scholarship/"><strong>Madhya Pradesh Scholarship</strong></a> – MP Scholarship</li><li><a href="https://www.freshersnow.com/punjab-scholarship/"><strong>Punjab Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/rajasthan-scholarship/"><strong>Rajasthan Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/rashtriya-sanskrit-sansthan-scholarship/"><strong>Sanskrit Scholarship</strong></a> – Delhi Scholarship</li><li><a href="https://www.freshersnow.com/ts-epass/"><strong>Telangana ePASS</strong></a></li><li><a href="https://www.freshersnow.com/up-scholarship/"><strong>UP Scholarship</strong></a> – Uttara Pradesh Scholarship</li><li><a href="https://www.freshersnow.com/west-bengal-scholarship/"><strong>West Bengal Scholarship</strong></a> – WB Scholarship for OBC, SC, ST Students</li><li><a href="https://www.freshersnow.com/aikyashree-scholarship/"><strong>WBMDFC Scholarship</strong></a> – Aikyashree Scholarship</li><li><a href="https://www.freshersnow.com/prl-aruna-lal-scholarships/"><strong>PRL Aruna Lal Scholarships</strong></a> – Gujarat Science Students</li><li><a href="https://www.freshersnow.com/swami-vivekananda-scholarship/"><strong>Swami Vivekananda Scholarship</strong></a> – SVMCM WBHED</li><li><a href="https://www.freshersnow.com/bikash-bhavan-scholarship/"><strong>Bikash Bhavan Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/tsp-scholarship/"><strong>TSP Scholarship</strong> </a></li><li><a href="https://www.freshersnow.com/nabanna-scholarship/"><strong>Nabanna Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ch-muhammed-koya-scholarship/"><strong>CH Muhammed Koya Scholarships</strong></a></li><li><a href="https://www.freshersnow.com/adw-scholarship/"><strong>ADW Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/gokdom-scholarship/"><strong>GOKDOM Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ashirwad-scholarship/"><strong>Ashirwad Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/e-medhabruti-scholarship/"><strong>E Medhabruti Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dte-maharashtra-scholarship/"><strong>DTE Maharashtra Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/haryana-scholarship/"><strong>Haryana Scholarship</strong></a></li></ul><h2>Category Wise Scholarships 2020</h2><ul><li><a href="https://www.freshersnow.com/indian-oil-sports-scholarship/"><strong>IOCL Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/aicte-gate-scholarship/"><strong>GATE Scholarship</strong></a> – Ph.D./M.Tech</li><li><a href="https://www.freshersnow.com/west-bengal-scholarship/"><strong>West Bengal Scholarship</strong></a> – WB Scholarship for OBC, SC, ST Students</li><li><a href="https://www.freshersnow.com/dr-ambedkar-scholarship/"><strong>Dr. Ambedkar Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/e-district-scholarship/"><strong>E-District Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ongc-scholarship/"><strong>ONGC Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/moma-scholarship/"><strong>MOMA Scholarship</strong></a></li></ul><h2>Scholarships After Class 12</h2><ul><li><a href="https://www.freshersnow.com/pragati-scholarship/"><strong>AICTE Pragati Scholarship for Girls</strong></a></li><li><a href="https://www.freshersnow.com/vodafone-scholarship/"><strong>Vodafone Scholarship</strong></a></li></ul><h2>Scholarships After Class 10</h2><ul><li><a href="https://www.freshersnow.com/indian-oil-sports-scholarship/"><strong>IOCL Scholarship&nbsp;</strong></a></li><li><a href="https://www.freshersnow.com/jio-scholarship/"><strong>Jio Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/cbse-merit-scholarship-for-single-girl-child/"><strong>CBSE Single Girl Child Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/pfms-scholarship/"><strong>PFMS Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/begum-hazrat-mahal-national-scholarship/"><strong>Begum Hazrat Mahal National Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/vodafone-scholarship/"><strong>Vodafone Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dte-maharashtra-scholarship/"><strong>DTE Maharashtra Scholarship</strong></a></li></ul><strong>Dr APJ Abdul Kalam Scholarship</strong></a></li></ul><p>We have listed the Majority of <strong>Scholarships 2020 in India</strong> (National &amp; State-wise). Check them according to your needs. And apply if you are eligible. And do not forget to share this Helpful Resouce with fellow friends.</p><h2>Frequently Asked Questions</h2><p><strong>Does Freshers Now Provide Information about All Scholarships?</strong></p><p>Yes, Freshersnow.com covers all Scholarships in India both National &amp; State-wise.</p><p><strong>Are there any Scholarships Available for Sports?</strong></p><p>Yes, there are some Scholarships such as IOCL Sports Scholarships that encourage the candidates.</p><p><strong>Will Freshers Now Provide Details About Scholarships Available for Girls?</strong></p><p>Yes, Freshersnow.com had separately listed the Scholarships that will be helpful for Girls.</p><div class="code-block code-block-8" style="margin: 8px 0; clear: both;"> <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3868142591853795" data-ad-slot="2839947575" data-ad-format="auto"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></div>
-
-
-
-
- {%  endblock  %}

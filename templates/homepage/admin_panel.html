@@ -30,12 +30,13 @@ overflow-x:scroll;
 }
 
  .table td {
+
   font-size: 40px;
   vertical-align: bottom;
 }
  .heading tr,th{
     font-family: Arial, sans-serif;
-    background-color: cornflowerblue;
+    background-color: white;
     color: black;
     font-size: 40px;
   }
@@ -72,8 +73,24 @@ tr[data-href]
 
 <div class="container padding text-center" style="margin-top: 60px;margin-bottom: 60px; overflow:auto;" >
   <div class="row welcome ">
-      <div class="col-12">
+      <div class="col-10">
         <h2 class="title" style="font-size: 30px;">{{current_scholarship.title}} </h2>
+        <div class="card bg-warning text-white">
+    <div class="card-body">You have to select total {{current_scholarship.both }}  for this scholarship,kindly keep a note on it.</div>
+  </div>
+        <!-- <h4><mark>You have to select only {{current_scholarship.boy}} boys and {{current_scholarship.girl}} girls for this scholarship,kindly keep a note on it.</mark></h4> -->
+        <div class="card">
+    <div class="card-body">
+       {% if current_scholarship.boy > -1 and current_scholarship.girl > -1 %}
+      <h3>{{current_scholarship.boy}} boys and {{current_scholarship.girl}} girls</h3>
+      {% endif %}
+        <h3>Selected = {{ selected }} </h3>
+        <h3>Remaining = {{ remains }}</h3></div>
+      
+  </div>
+        <!-- <h4>Total= {{total }}</h4>
+        <h4>Selected = {{ selected }} </h4>
+        <h4>Remaining = {{ remains }}</h4> -->
       </div>
     </div>
 </div>
@@ -91,16 +108,20 @@ tr[data-href]
   </label>
 </div>
 </div> -->
+<div class="row">
+  <div class="col-md-12">
+
 					<div id="collapse1">				
-<table class="table ">
-  <thead class="heading">
+<table class="table " >
+  <thead class="heading  ">
     <tr>
       <th style="font-size: 15px;">S.no</th>
       <th style="font-size: 15px;">Reg No</th>
       <th style="font-size: 15px;">Name</th>
-      <th style="font-size: 15px;">Marks <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 0 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 1 %}">▼</a></th>
-            <th style="font-size: 15px;">Attendence <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 2 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 3 %}">▼</a></th>
-      <th style="font-size: 15px;">Father's rank <a style="color:white;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 4 %}">▲</a><a style="color:white;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 5 %}">▼</a></th>
+      <th style="font-size: 15px;">Marks <a style="color:black;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 0 %}">▲</a><a style="color:black;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 1 %}">▼</a></th>
+            <th style="font-size: 15px;">Attendence <a style="color:black;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 2 %}">▲</a><a style="color:black;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 3 %}">▼</a></th>
+      <th style="font-size: 15px;">Father's rank <a style="color:black;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 4 %}">▲</a><a style="color:black;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 5 %}">▼</a></th>
+      <th style="font-size: 15px;">YEAR<a style="color:black;" title="sort incresing" href="{% url 'show_template_sorted' current_scholarship.id 6 %}">▲</a><a style="color:black;" title="sort decreasing" href="{% url 'show_template_sorted' current_scholarship.id 7 %}">▼</a></th>
       <th style="font-size: 15px;">Status</th>
 
     </tr>
@@ -109,13 +130,15 @@ tr[data-href]
   {% for x,y in students %}
   
   	
-    <tr  data-href="{% url 'applied_application' x.id y.id  %}">
+    <tr  data-href="{% url 'applied_application' x.id y.id authority  %}" >
       <td style="font-size: 20px;"></td>
       <td style="font-size: 20px;">{{x.username}}</td>
       <td style="font-size: 20px;">{{x.first_name}}</td>
       <td style="font-size: 20px;">{{x.profile.marks}}</td>
       <td style="font-size: 20px;">{{x.profile.attendence}}</td>
       <td style="font-size: 20px;">{{x.profile.father_rank}}</td>
+      <td style="font-size: 20px;">{{x.profile.present_year}}</td>
+
       {% if y.status == 2 %}
       <td style="color: orange;">under observation</td>
       {% elif y.status == 1 %}
@@ -131,6 +154,16 @@ tr[data-href]
        </tbody>
 </table>
 
+</div>
+</div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+  <div class=" col-12 text-center">
+    <p><a href="{% url 'simple_export_admin_pannel' current_scholarship.id %}"><button class="btn btn-primary">Export The List </button></a></p>
+    
+  </div>
+  
 </div>
 
 

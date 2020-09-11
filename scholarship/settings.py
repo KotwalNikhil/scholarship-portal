@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'scholarship',
     'homepage',
     'import_export',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -137,14 +138,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.hushmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'myscholarship@hushmail.com'
-EMAIL_HOST_PASSWORD = 'myscholarship'
+EMAIL_HOST_USER = 'virusnikhil900@gmail.com'
+EMAIL_HOST_PASSWORD = '886263@1'
 EMAIL_USE_SSL=False
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 1025
+
 
 
 MESSAGE_TAGS = {

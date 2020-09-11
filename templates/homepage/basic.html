@@ -32,11 +32,11 @@
       </button>
       {% else %}
       <nav class="navbar navbar-vertical fixed-left navbar-md navbar-light bg-white" id="sidenav-main">
-    <div class="container">
+    <div class="container d-flex justify-content-center ">
       {% endif %}
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="/">
-        <img src="{% static '/homepage/static/assets/img/brand/scholarship.png' %}" class="navbar-brand-img" alt="Scholarship">
+        <img src="{% static '/homepage/static/assets/img/brand/scholarship.png' %}" style="height: 300px;width:160px;" class="navbar-brand-img" alt="Scholarship">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -69,15 +69,8 @@
               <i class="ni ni-single-02"></i>
               <span>My profile</span>
             </a>
-            <a href="homepage/profile.html" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <a href="homepage/profile.html" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </a>
-            <a href="user_login" class="dropdown-item">
+          
+            <a href="{% url 'change_password' %}"  class="dropdown-item">
               <i class="ni ni-support-16"></i>
               <span>change password</span>
             </a>
@@ -138,6 +131,11 @@
               <i class="ni ni-pin-3 text-orange"></i> Add Scholarship
             </a>
           </li>
+           <li class="nav-item">
+            <a class="nav-link " href="{% url 'change_session' %}">
+              <i class="ni ni-pin-3 text-orange"></i> Change session
+            </a>
+          </li>
                     {% elif user.is_staff %}
                     <li class="nav-item">
             <a class="nav-link " href="{% url 'simple_upload' %}">
@@ -146,7 +144,17 @@
           </li>
           <li class="nav-item">
             <a class="nav-link " href="{% url 'user_register' %}">
-              <i class="ni ni-pin-3 text-orange"></i> Register student
+              <i class="ni ni-single-02 text-green"></i> Register student
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'edit_user_profile_form'  %}">
+              <i class="ni ni-single-02 text-voilet"></i> Edit student profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'registered_students'  %}">
+              <i class="ni ni-single-02 text-orange"></i> Registered students
             </a>
           </li>
 
@@ -157,9 +165,10 @@
             {% if user.is_authenticated %}
            <li class="nav-item">
             <a class="nav-link " href="{% url 'profile'  %}">
-              <i class="ni ni-single-02 text-yellow"></i> User profile
+              <i class="ni ni-single-02 text-yellow"></i> Your profile
             </a>
           </li>
+          
 
             {% if user.is_superuser %}
           <li class="nav-item  class=" active=" ">
@@ -210,21 +219,23 @@
         <h6 class="navbar-heading text-muted">MORE</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
+          
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-              <i class="ni ni-spaceship"></i> All Scholarships
+            <a class="nav-link" href="{% url 'our_team' %}">
+              <i class="ni ni-palette"></i> Our team
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-              <i class="ni ni-palette"></i> About us
+            <a class="nav-link" href="{% url 'how_to_apply' %}">
+              <i class="ni ni-palette"></i>How to apply
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
-              <i class="ni ni-ui-04"></i> Grievance
+           <li class="nav-item">
+            <a class="nav-link" href="https://engineertrends.com/post-your-blog/">
+              <i class="ni ni-palette"></i> Want to write a blog ?
             </a>
           </li>
+          
         </ul>
       </div>
     </div>
@@ -278,18 +289,12 @@
                 <i class="ni ni-single-02"></i>
                 <span>My profile</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="{% url 'change_password'  %}" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>change password</span>
-              </a>
+             
+              
+            <a href="{% url 'change_password' %}"  class="dropdown-item">
+              <i class="ni ni-support-16"></i>
+              <span>change password</span>
+            </a>
               <div class="dropdown-divider"></div>
               <a href="{% url 'logout'  %}" class="dropdown-item">
                 <i class="ni ni-user-run"></i>

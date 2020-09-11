@@ -17,7 +17,9 @@ urlpatterns=[
     path('logout',views.logout,name='logout'),
     path('del_user',views.del_user,name='del_user'),
     path('user_profile',views.user_profile,name='profile'),
-    #path('admin_login', views.user_login, {'register':True},name='admin_login'),
+    path('show_user_profile_for_admin_work/',views.show_user_profile_for_admin_work,name='show_user_profile_for_admin_work'),
+    path('edit_user_profile_form/', views.edit_user_profile_form, name='edit_user_profile_form'),
+    url(r'^edit_user_profile_for_admin_work/(?P<x>[0-9]+)/$', views.edit_user_profile_for_admin_work,name='edit_user_profile_for_admin_work'),
     path('admin_register',views.admin_register,name='admin_register'),
     url(r'^admin_delete/(?P<x>[0-9]+)/$', views.admin_delete, name='admin_delete'),
 

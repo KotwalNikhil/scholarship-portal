@@ -1,0 +1,87 @@
+{% extends 'homepage/basic.html' %}
+
+
+
+{% block includefiles2 %}
+         
+
+   {% endblock %}
+
+
+{% block content %}
+
+  <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-9">
+              <h4 class="text-lead text-light">Change the profile data of your students if it is wrong .</h4>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-5">
+              <div class="text-muted text-center mt-2 mb-3"><h3>Enter details</h3></div>
+            
+             
+               
+ <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>        
+            </div>
+           
+            <div class="card-body px-lg-5 py-lg-5">
+             <div class="card bg-warning">
+    <div class="card-body ">
+      <h4 class="card-text">1. Please change the data if it is really mandatory and student has the proof for the wrong data.<br></h4>
+    </div>
+  </div><br><br>
+
+              
+                
+                <div class="form-group text-center">
+                <form action="{% url 'show_user_profile_for_admin_work' %}" method="POST">
+                   {% csrf_token %}
+  <div class="form-group">
+    <label for="text">Reg No.</label>
+    <input type="text" class="form-control" name="regno" required>
+  </div>
+  
+  
+  <button type="submit" class="btn btn-primary">Go to Profile</button>
+</form>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

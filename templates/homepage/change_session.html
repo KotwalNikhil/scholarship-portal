@@ -1,0 +1,94 @@
+{% extends 'homepage/basic.html' %}
+
+
+
+{% block includefiles2 %}
+         
+
+   {% endblock %}
+
+
+{% block content %}
+
+  <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+              <h4 class="text-lead text-light">Change the session for our college.</h4>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-md-9">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-5">
+              <div class="text-muted text-center mt-2 mb-3"><h4>current session</h4></div>
+             <div class="text-center">
+              <h1 style="font-size: 40px;">{{cs}} - {{cs1}} </h1><br>
+            </div>
+             
+               <div class="text-center">
+                <a href="{% url 'alter_session' 1 %}" style="font-size: 50px;margin-right: 20px;" title="Increase the session by one"> &#x2b;</a> <a href="{% url 'alter_session' 0 %}" style="font-size: 50px;">&#x2212;</a>
+ </div>
+ <div class ="form-group">
+              {% if messages %}
+              <ul class="messages">
+                {% for i in messages %}
+                <li style="list-style-type: none;" class="{{ i.tags }}">
+                  <div class="alert {{ i.tags }} alert-dismissible fade show" role="alert">
+                    {{i}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>        
+            </div>
+           
+            <div class="card-body px-lg-5 py-lg-5">
+             <div class="card bg-info">
+    <div class="card-body ">
+      <h4 class="card-text">1. Please delete all the applications and students of the previous session if you changed the session in order to avoid the old applications in the new session.<br><br>2. Contact admin for uploading new updated data of students .<br><br>3. All selected students of previous session will be stored in the database.<br><br>4.First delete all the applications, then delete all previous scholarships and then previous students</h4>
+    </div>
+  </div>
+
+              
+                <div class="form-group mb-3">
+                
+                </div>
+                <div class="form-group text-center">
+                 <div class="row">
+                  <div class="col-12">
+                   <a href="{% url 'delete_previous_app'  %}"> <button  class="btn btn-primary mt-4">Delete previous applications</button></a>
+                 </div>
+                  <div class="col-12">
+                   <a href="{% url 'delete_all_scholarships'  %}"> <button  class="btn btn-primary mt-4">Delete All Scholarships</button></a>
+                 </div>
+                 <div class="col-12">
+                  <a href="{% url 'delete_all_students'  %}">  <button  class="btn btn-primary mt-4">Delete previous students</button></a>
+                 </div>
+                </div>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

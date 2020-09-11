@@ -2,6 +2,12 @@
 
 {% block includefiles %}
 <style>
+
+.branch
+{
+  background-color: rgba(154,158,170,0.17) !important;
+}
+
 .table {
   counter-reset: serial-number;  /* Set the serial number counter to 0 */
   width: 100%;
@@ -78,8 +84,8 @@ function myFunction(x) {
         <div class="row">
 
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello {{user.first_name}}</h1>
-            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+            <h2 class="text-white" >Hello {{ user.first_name }} </h2>
+            <p class="text-white mt-0 mb-5">1. This is your profile page. You can see your personal data and the scholarships you have applied with their respective status.<br><br>2. Contact admin if you find anything wrong.</p>
             <img class="img-responsive img-rounded" src="{{ user.profile.image.url }}" alt="profile pic" style="height: 200px; width: 200px;">
             
           </div>
@@ -142,11 +148,11 @@ function myFunction(x) {
       <td ></td>
       <td>{{x.title}}</td>
       {% if y == 2 %}
-      <td style="color: orange;">under observation</td>
+      <td style="color: orange;">P</td>
       {% elif y == 1 %}
-      <td style="color: green;">Selected</td>
+      <td style="color: green;">S</td>
       {% else %}
-      <td style="color:red;">Rejected</td>
+      <td style="color:red;">R</td>
       {% endif %}
     </tr>
   </tbody>
@@ -213,11 +219,18 @@ function myFunction(x) {
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="{{pro2_form.father_rank_for_label}}">Father's rank</label>
-                        {{pro2_form.father_rank}}
+                        <label class="form-control-label" for="{{pro_form.first_name.id_for_label}}">Mobile Number</label>
+                        <!--<input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{user.profile.name}}" value="{{user.profile.name}}" disabled>-->
+                      {{pro2_form.mobile}}
                       </div>
                     </div>
-                  </div>
+                     <div class="col-lg-6">
+                       <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_name_for_label}}">Present year</label>
+                        {{pro2_form.present_year}}
+                      </div>
+                    </div>
+                                      </div>
                   <div class="row">
                     <div class="col-lg-6">
                        <div class="form-group">
@@ -225,9 +238,17 @@ function myFunction(x) {
                         {{pro2_form.father_name}}
                       </div>
                     </div>
+                   <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="{{pro2_form.father_rank_for_label}}">Father's rank</label>
+                        {{pro2_form.father_rank}}
+                      </div>
+                    </div>
+
                   </div>
+                  <hr >
                 </div>
-                <hr class="my-4" />
+                
                 <h6 class="heading mb-4"><mark>Academic information</mark></h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -238,18 +259,20 @@ function myFunction(x) {
                         {{pro2_form.marks}}
                       </div>
                     </div>
-                    <!-- <div class="col-lg-6">
-                      <div class="form-group">
+                   <!--  <div class="col-lg-6">
+                       <div class="form-group">
                         <label class="form-control-label" for="{{pro2_form.branch.id_for_label}}">Branch</label>
                         {{pro2_form.branch}}                       
                     </div>
-                  </div> -->
+                  </div>  -->
                   <div class="col-lg-6">
                    <label class="form-control-label" >Branch</label>
-                  {% if user.profile.branch == 1 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="SE COMP B" value="COMP" readonly> {% endif %}
-      {% if user.profile.branch == 2 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="IT" readonly> {% endif %}
-      {% if user.profile.branch == 3 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="ENTC" readonly> {% endif %}
-      {% if user.profile.branch == 4 %}<input type="text" id="input-email" class="form-control form-control-alternative" placeholder="" value="MECH" readonly> {% endif %} 
+                  {% if user.profile.branch == 1 %}
+                  <div class="form-control branch">COMP</div>
+                   {% endif %}
+      {% if user.profile.branch == 2 %}<div class="form-control branch">IT</div> {% endif %}
+      {% if user.profile.branch == 3 %}<div class="form-control branch">ENTC</div> {% endif %}
+      {% if user.profile.branch == 4 %}<div class="form-control branch">MECH</div> {% endif %} 
                   </div>
                 </div>
                   <div class="row">
@@ -273,10 +296,15 @@ function myFunction(x) {
 
                 <h6 class="heading  mb-4"><mark>Documents Uploaded</mark></h6>
 
+                <p class="text-success">Please upload these document in jpg or png format</p>
+
+
                 <div class="pl-lg-12">
+                                   <h4 style="color:red">File Size should be less then 1 MB</h4><br>
+
                   <div class="row">
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                       <div class="form-group">
                         <label class="{{pro2_form.image.id_for_label}}" >Profile picture</label>
                         {{pro2_form.image}}
@@ -293,7 +321,7 @@ function myFunction(x) {
                         <hr>
                     </div>
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                       <div class="form-group">
                         <label class="{{pro2_form.document_last_sem.id_for_label}}" >Last year marksheet</label>
                         {{pro2_form.document_last_sem}}
@@ -311,7 +339,7 @@ function myFunction(x) {
                     </div>
 
 
-                        <div class="col-lg-12">
+                        <div class="col-lg-8">
                       <div class="form-group">
                       <label class="{{pro2_form.document10.id_for_label}}" >Class 10th marksheet</label>
                         {{pro2_form.document10}}
@@ -328,7 +356,7 @@ function myFunction(x) {
                         <hr>
                     </div>
 
-                         <div class="col-lg-12">
+                         <div class="col-lg-8">
                       <div class="form-group">
                       <label class="{{pro2_form.document12.id_for_label}}" >Class 12th Marksheet</label>
                         {{pro2_form.document12}}
@@ -347,7 +375,7 @@ function myFunction(x) {
                   
                 
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                       <div class="form-group">
                       <label class="{{pro2_form.father_id.id_for_label}}" >Father Identity Card</label>
                         {{pro2_form.father_id}}
@@ -364,7 +392,7 @@ function myFunction(x) {
                         <hr>
                     </div>
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                       <div class="form-group">
                        <label class="{{pro2_form.student_id.id_for_label}}" >Student's identity Card</label>
                         {{pro2_form.student_id}}
@@ -378,56 +406,27 @@ function myFunction(x) {
                           {% endif %}
                         </div>
                       </div>
-                        
+                        <hr>
                     </div>
                     
               
               </div>
-              <hr class="my-4" />
 
                 <!-- Address -->
                 <h6 class="heading mb-4"><mark>Contact information</mark></h6>
                 <div class="pl-lg-4">
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                       <div class="form-group">
                         <label class="form-control-label" for="{{pro2_form.address.id_for_label}}">Permanent Address</label>
-                        <!--<input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="{{user.profile.address}}" type="text">-->
+                        
                         {{pro2_form.address}}
                       </div>
+                      <hr>
                     </div>
                   </div>
-                  <!--<div class="row">-->
-                    <!--<div class="col-lg-4">-->
-                      <!--<div class="form-group">-->
-                        <!--<label class="form-control-label" for="input-city">City</label>-->
-                        <!--<input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-4">-->
-                      <!--<div class="form-group">-->
-                        <!--<label class="form-control-label" for="input-country">State</label>-->
-                        <!--<input type="text" id="input-country" class="form-control form-control-alternative" placeholder="eg. Udhampur" value="">-->
-                      <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-4">-->
-                      <!--<div class="form-group">-->
-                        <!--<label class="form-control-label" for="input-country">Pin code</label>-->
-                        <!--<input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="eg- 182121">-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
+                  
                 </div>
-                <hr class="my-4" />
-                <!-- Description -->
-                <!--<h6 class="heading mb-4"><mark>About me</mark></h6>-->
-                <!--<div class="pl-lg-4">-->
-                  <!--<div class="form-group">-->
-                    <!--<label>About Me</label>-->
-                    <!--<textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>-->
-                  <!--</div>-->
-                <!--</div>-->
-                    <!--description ends-->
                     <input type="submit" class="btn btn-primary" value="Update">
               </form>
             </div>
@@ -447,19 +446,19 @@ function myFunction(x) {
         <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
             <div class="copyright text-center text-xl-left text-muted">
-              &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Nikhil</a>
+              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">All rights reserved</a>
             </div>
           </div>
           <div class="col-xl-6">
             <ul class="nav nav-footer justify-content-center justify-content-xl-end">
               <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Scholarship team AIT</a>
+                <a href="#" class="nav-link" target="_blank">Scholarship team AIT</a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                <a href="#" class="nav-link" target="_blank">About Us</a>
               </li>
               <li class="nav-item">
-                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                <a href="https://engineertrends.com/post-your-blog/" class="nav-link" target="_blank">Want to write a Blog</a>
               </li>
               <li class="nav-item">
                 <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>

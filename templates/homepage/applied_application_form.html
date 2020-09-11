@@ -78,9 +78,17 @@
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
-                <div class="col-8">
+                <div class="col-6">
                   <h3 class="mb-0">{{ student.first_name }}</h3>
                 </div>
+                {% if authority  == 0  %}
+                <div class="col-6">
+                <div class="card bg-primary text-white">
+    <div class="card-body">             <bold>you have selected all the required students reject few  selected student if you want to select others</bold>
+</div>
+  </div>
+</div>
+{% endif %}
                
               </div>
             </div>
@@ -111,13 +119,25 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{student.profile.name}}" value="{{student.profile.name}}" disabled>
+                        <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="{{student.first_name}}" value="{{student.profile.name}}" disabled>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Father's rank</label>
                         <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="{{student.last_name}}" value="{{student.profile.father_rank}}"disabled>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Father's Name</label>
+                        <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="" value="{{student.profile.father_name}}"disabled>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Phone Number</label>
+                        <input type="text" id="mobile" class="form-control form-control-alternative" placeholder="" value="{{student.profile.mobile}}"disabled>
                       </div>
                     </div>
                   </div>
@@ -151,7 +171,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Attendence</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative"  value="">
+                        <input type="text" id="input-last-name" class="form-control form-control-alternative"  value="{{student.profile.attendence}}">
                       </div>
                     </div>
                   </div>
@@ -225,6 +245,8 @@
                       </div>
                       </div>
                     </div>
+
+                    
                      <div class="col-lg-12">
                       <div class="form-group">
                         <label class="form-control-label" >Extra 1</label>
@@ -239,6 +261,7 @@
                     </div>
                      <div class="col-lg-12">
                       <div class="form-group">
+
                         <label class="form-control-label" >Extra 2</label>
                         <div>
                        {% if application.applied_extra2 %}
@@ -249,6 +272,21 @@
                       </div>
                       </div>
                     </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+
+                        <label class="form-control-label" >Filled Application Form</label>
+                        
+                       {% if application.applied_scholarship_form %}
+                          <!-- <a href="{{application.applied_scholarship.url}}"></a> <img class="img-responsive img-rounded" src="{{application.applied_scholarship_form.url}}" alt="extra 2" style="height: 200px; width: 200px;"></a> -->
+
+                          <a href="{% url 'show-applied_scholarship-form' application.id %}">View </a>
+                        {% else %}
+                           <p class="text-danger">document not uploaded</p>
+                        {% endif %}
+                      </div>
+                      </div>
                     
               
               </div>
@@ -265,26 +303,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">State</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="eg. Udhampur" value="">
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Pin code</label>
-                        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="eg- 182121">
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 <hr class="my-4" />
                 <!-- Description -->
@@ -293,11 +312,25 @@
             </div>
             <div class="row">
               <div class="col-6">
-             <a href="{% url 'change_status' application.id 1 %}"><button type="button" class="btn btn-success float-right">Select</button></a>
+                {% if authority == 1 and got_already == 0 %}
+                     <a href="{% url 'change_status' application.id 1 student.id %}"><button type="button" class="btn btn-success float-right">Select</button></a>
+                {% elif got_already == 1 %}
+                     <div class="card bg-primary text-white">
+                         <div class="card-body">
+                             <bold>This student have already got one scholarship for this session</bold>
+                        </div>
+                     </div>
+                {% elif authority == 0 %}
+                     <div class="card bg-primary text-white">
+                         <div class="card-body">
+                             <bold>you have selected all the required students <br>reject few  selected student if you want to select others</bold>
+                        </div>
+                     </div>
+                {% endif %}
                
               </div>
               <div class="col-6">
-               <a href="{% url 'change_status' application.id 0 %}"> <button type="button" class="btn btn-danger">Reject</button></a>
+               <a href="{% url 'change_status' application.id 0 student.id %}"> <button type="button" class="btn btn-danger">Reject</button></a>
 
               </div>
             </div>

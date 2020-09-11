@@ -1,0 +1,118 @@
+{% extends 'homepage/basic.html' %}
+
+{% block includefiles %}
+
+<style >
+
+  .testimonial-group > .row {
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+.testimonial-group > .row > .col-xl-4  {
+  display: inline-block;
+  float: none;
+}
+
+.card-body
+{
+  min-width: 300px;
+}
+
+::-webkit-scrollbar  {
+  width: 5px;
+  height:5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: LightGray; 
+}
+  
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+   <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8  "> 
+      <div class="container-fluid testimonial-group "> 
+          <!-- Card stats -->
+               <div class="row   ">
+
+      {% for i in not_expired %}
+            <div class="col-xl-4"  >
+              <a href="{% url 'show_template' i.id %}"> <div class="card card-stats mb-4 ">
+                <div class="card-body"style="height:150px;width:auto;background-color:LightGray;">
+                  <div class="row">
+                    <div class="col-6">
+                      <span class="h2 font-weight-bold mb-0" style="font-family:Arial, Helvetica, sans-serif; text-transform: uppercase";> {{i.title}}</span><br>
+                    </div>
+                    <div class="col-6 text-right">
+                      <div  class="btn btn-success btn-sm" style="font-size:10px;">Active
+
+                      </div>
+                    </div>
+                  </div>
+                    <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
+                  
+                  <!-- <button type="button" class="btn btn-success btn-md" style="position:absolute;
+bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
+ -->    
+                      <p style="color:green;bottom:5%;left:5%;text-transform: capitalize;"><b>{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</b></p>
+                </div>
+              </div></a>
+            </div>
+      {% endfor %}
+      <!--expired scholarships      -->
+      {% for i in expired %}
+            <div class="col-xl-4  " style="margin-bottom:3%;" >
+              <a href="{% url 'show_template' i.id %}"> <div class="card card-stats mb-4 ">
+                <div class="card-body"style="height:150px;width:auto;background-color:LightGray;">
+                  <div class="row">
+                    <div class="col-6">
+<!--                      <h5 class="card-title text-uppercase text-muted mb-0">{{i.applicants}} applications</h5>-->
+                      <span class="h2 font-weight-bold mb-0" style="font-family:Arial, Helvetica, sans-serif; text-transform: uppercase";> {{i.title}}</span><br>
+                    </div>
+                    <div class="col-6 text-right">
+                      <div  class="btn btn-danger btn-sm" style="font-size:10px;">InActive
+
+                      </div>
+                       <!--<img src="{{i.img.url}}" alt="image">-->
+                    </div>
+                  </div>
+<!--                  <p class="mt-3 mb-0 text-muted text-sm">-->
+<!--                    <span class="text-success mr-2">{{i.fromdate}}-{{i.toomdate}}</span>-->
+                    <span class="card-title text-capitalize  mb-0" style="font-size:15px;font-family:Arial;";>{{i.short_description}}</span>
+                <!-- <button type="button" class="btn btn-danger btn-md" style="position:absolute;
+bottom:5%;left:5%;text-transform: capitalize;">{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</button>
+ -->
+ <p style="color:red;bottom:5%;left:5%;text-transform: capitalize;"><b>{{i.fromdate}}  <i class="fas fa-cog fa-spin"></i>  {{i.toomdate}}</b></p>
+
+                </div>
+              </div></a>
+            </div>
+      {% endfor %}
+    
+
+          </div>
+      </div>
+    </div>
+
+
+
+        
+
+
+
+    <div class="td-pb-span8 td-main-content " role="main"><div class="td-ss-main-content"><div class="code-block code-block-12" style="margin: 8px 0; clear: both;"> <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3868142591853795" data-ad-slot="5684371136" data-ad-format="auto" data-full-width-responsive="true"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> </div><div class="td-page-header"><h1 class="entry-title td-page-title text-center"> <span > Scholarships 2020 of AIT </span></h1></div><div class="td-page-content "><p><b><strong>Scholarships 2020 in India @ scholarships.gov.in (National &amp; State-wise) – Apply Online:</strong> If you are looking for a complete source of information about Various Scholarships in India available in National &amp; State-Wise, then you can go through this page. Also, do not forget to bookmark (CTRL + D), so that you will not miss out on any new Scholarship that is announced officially. Through this page, we have sectioned Scholarships according to the State, Gender, Category, Post Matric, Pre Matric. In that way, candidates can check according to their needs.</p><p>Click on the Scholarship 2020, that you are interested in. And go through the total information such as the Eligibility, Important Dates to apply, Application Form availability, Benefits and all. Well, this page is the single stop source for all the candidates who are looking for the Student Scholarships 2020, <strong>Merit Scholarships 2020</strong>, Educational Scholarships 2020 and all.</p></b><h2>Past Scholarships of AIT</h2><ul><li><a href="https://www.freshersnow.com/ap-epass/"><strong>AP ePASS</strong></a></li><li><a href="https://www.freshersnow.com/bihar-scholarship/"><strong>Bihar Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dce-scholarship/"><strong>Kerala Scholarship</strong></a> – DCE Scholarship</li><li><a href="https://www.freshersnow.com/hp-epass/"><strong>Himachal Pradesh Scholarship</strong></a> – HP ePASS Scholarship Portal</li><li><a href="https://www.freshersnow.com/pmsss-jk-scholarship/"><strong>Jammu and Kashmir Scholarship</strong></a> – JK Scholarship also Known as PMSSS</li><li><a href="https://www.freshersnow.com/mahadbt-scholarship/"><strong>Maharashtra Scholarship</strong></a> – MahaDBT</li><li><a href="https://www.freshersnow.com/mp-scholarship/"><strong>Madhya Pradesh Scholarship</strong></a> – MP Scholarship</li><li><a href="https://www.freshersnow.com/punjab-scholarship/"><strong>Punjab Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/rajasthan-scholarship/"><strong>Rajasthan Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/rashtriya-sanskrit-sansthan-scholarship/"><strong>Sanskrit Scholarship</strong></a> – Delhi Scholarship</li><li><a href="https://www.freshersnow.com/ts-epass/"><strong>Telangana ePASS</strong></a></li><li><a href="https://www.freshersnow.com/up-scholarship/"><strong>UP Scholarship</strong></a> – Uttara Pradesh Scholarship</li><li><a href="https://www.freshersnow.com/west-bengal-scholarship/"><strong>West Bengal Scholarship</strong></a> – WB Scholarship for OBC, SC, ST Students</li><li><a href="https://www.freshersnow.com/aikyashree-scholarship/"><strong>WBMDFC Scholarship</strong></a> – Aikyashree Scholarship</li><li><a href="https://www.freshersnow.com/prl-aruna-lal-scholarships/"><strong>PRL Aruna Lal Scholarships</strong></a> – Gujarat Science Students</li><li><a href="https://www.freshersnow.com/swami-vivekananda-scholarship/"><strong>Swami Vivekananda Scholarship</strong></a> – SVMCM WBHED</li><li><a href="https://www.freshersnow.com/bikash-bhavan-scholarship/"><strong>Bikash Bhavan Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/tsp-scholarship/"><strong>TSP Scholarship</strong> </a></li><li><a href="https://www.freshersnow.com/nabanna-scholarship/"><strong>Nabanna Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ch-muhammed-koya-scholarship/"><strong>CH Muhammed Koya Scholarships</strong></a></li><li><a href="https://www.freshersnow.com/adw-scholarship/"><strong>ADW Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/gokdom-scholarship/"><strong>GOKDOM Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ashirwad-scholarship/"><strong>Ashirwad Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/e-medhabruti-scholarship/"><strong>E Medhabruti Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dte-maharashtra-scholarship/"><strong>DTE Maharashtra Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/haryana-scholarship/"><strong>Haryana Scholarship</strong></a></li></ul><h2>Category Wise Scholarships 2020</h2><ul><li><a href="https://www.freshersnow.com/indian-oil-sports-scholarship/"><strong>IOCL Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/aicte-gate-scholarship/"><strong>GATE Scholarship</strong></a> – Ph.D./M.Tech</li><li><a href="https://www.freshersnow.com/west-bengal-scholarship/"><strong>West Bengal Scholarship</strong></a> – WB Scholarship for OBC, SC, ST Students</li><li><a href="https://www.freshersnow.com/dr-ambedkar-scholarship/"><strong>Dr. Ambedkar Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/e-district-scholarship/"><strong>E-District Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/ongc-scholarship/"><strong>ONGC Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/moma-scholarship/"><strong>MOMA Scholarship</strong></a></li></ul><h2>Scholarships After Class 12</h2><ul><li><a href="https://www.freshersnow.com/pragati-scholarship/"><strong>AICTE Pragati Scholarship for Girls</strong></a></li><li><a href="https://www.freshersnow.com/vodafone-scholarship/"><strong>Vodafone Scholarship</strong></a></li></ul><h2>Scholarships After Class 10</h2><ul><li><a href="https://www.freshersnow.com/indian-oil-sports-scholarship/"><strong>IOCL Scholarship&nbsp;</strong></a></li><li><a href="https://www.freshersnow.com/jio-scholarship/"><strong>Jio Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/cbse-merit-scholarship-for-single-girl-child/"><strong>CBSE Single Girl Child Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/pfms-scholarship/"><strong>PFMS Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/begum-hazrat-mahal-national-scholarship/"><strong>Begum Hazrat Mahal National Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/vodafone-scholarship/"><strong>Vodafone Scholarship</strong></a></li><li><a href="https://www.freshersnow.com/dte-maharashtra-scholarship/"><strong>DTE Maharashtra Scholarship</strong></a></li></ul><strong>Dr APJ Abdul Kalam Scholarship</strong></a></li></ul><p>We have listed the Majority of <strong>Scholarships 2020 in India</strong> (National &amp; State-wise). Check them according to your needs. And apply if you are eligible. And do not forget to share this Helpful Resouce with fellow friends.</p><h2>Frequently Asked Questions</h2><p><strong>Does Freshers Now Provide Information about All Scholarships?</strong></p><p>Yes, Freshersnow.com covers all Scholarships in India both National &amp; State-wise.</p><p><strong>Are there any Scholarships Available for Sports?</strong></p><p>Yes, there are some Scholarships such as IOCL Sports Scholarships that encourage the candidates.</p><p><strong>Will Freshers Now Provide Details About Scholarships Available for Girls?</strong></p><p>Yes, Freshersnow.com had separately listed the Scholarships that will be helpful for Girls.</p><div class="code-block code-block-8" style="margin: 8px 0; clear: both;"> <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3868142591853795" data-ad-slot="2839947575" data-ad-format="auto"></ins> <script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></div>
+
+
+
+
+ {%  endblock  %}

@@ -10,7 +10,16 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css' />
 
 <style >
-  
+  .table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+  width: 100%;
+}
+
+.table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
   
 .tile{
   width: 100%;
@@ -221,16 +230,28 @@ function myFunction(x) {
                         <div class="stats">
 
                             <div>
-                                Prime Minister’s Scholarship Scheme was introduced from the Academic year 2006-07 to encourage higher technical and professional education for the dependent wards of Ex Servicemen / Ex Coast Guard personnel and their widows.
+                                
                                 {{current_scholarship.short_description}}
                             </div>
                         </div>
-
-                        <div class="stats">
+                         <div class="stats">
 
                             <div>
-                               <a style="color: #FF0000; font-size: 15px;" href="{% url 'show-pdf' current_scholarship.id %}" class="Cbtn Cbtn-danger">Download brouchre</a>
-                            </div>                     
+                              <mark>For Total {{current_scholarship.both}} students per branch</mark><br>
+                                {% if current_scholarship.boy > -1 and current_scholarship.girl > -1 %}
+                                <mark>For {{current_scholarship.boy}} Boys and {{current_scholarship.girl}} Girls per branch.</mark>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="stats ">
+
+                            <div >
+                               <a style="color: #FF0000; font-size: 15px;" href="{% url 'show-pdf' current_scholarship.id %}" class="Cbtn Cbtn-danger">Download SOP</a>
+                            </div>    
+                            <div >
+                               <a style="color: #FF0000; font-size: 15px;" href="{% url 'show-scholarship-form' current_scholarship.id %}" class="Cbtn Cbtn-danger">Download Scholarship form</a>
+                            </div>                 
 
                         </div>
 
@@ -245,7 +266,13 @@ function myFunction(x) {
 
                         <div class="stats">
                           <div>
-                            <a href="{% url 'application_form' current_scholarship.id  %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
+                            {% if got_already == 0 %}
+                               <a href="{% url 'application_form' current_scholarship.id  %}" ><button type="button"  class="btn btn-primary">Apply here</button></a>
+                            {% else %}
+                               <div>
+                                  <h4 style="color: green;">You can't apply as you have already got one scholarship</h4>
+                                </div>
+                            {% endif %}
                           </div>
                         </div>
                         {% endif %}
@@ -273,38 +300,40 @@ function myFunction(x) {
 <section class="graph">
     <div class="container-fluid mt--7 ">
       <div class="row">
-        <div class="col-xl-8 mb-5 mb-xl-0">
-          <div class="card bg-gradient-default shadow">
-            <div class="card-header bg-transparent">
+       <div class="col-xl-8 mb-5 mb-xl-0">
+          <div class="card shadow">
+            <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                  <h2 class="text-white mb-0">Total Scholarships</h2>
+                  <h3 class="mb-0">Overview</h3>
                 </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                
               </div>
             </div>
-            <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales" class="chart-canvas"></canvas>
-              </div>
+            <div class="table-responsive" >
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush" style="height: 430px;">
+                <thead class="">
+                  <tr>
+                    <th style="font-size: 15px;" scope="col"><b>S no.</b></th>
+                    <th  style="font-size: 15px;" scope="col"><b>Scholarship Name</b></th>
+                    <th  style="font-size: 15px;" scope="col"><b>Applications received</b></th>
+                  </tr>
+                </thead>
+              <tbody>
+  {% for x,y in dict.values %}
+  
+    
+    <tr  >
+      <td style="font-size: 20px;"></td>
+      <td style="font-size: 20px;">{{x.title}}</td>
+      <td style="font-size: 20px;">{{y}}</td>
+    </tr>
+
+ 
+      {% endfor %}
+       </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -321,7 +350,7 @@ function myFunction(x) {
             <div class="card-body">
               <!-- Chart -->
               <div class="chart">
-                <canvas id="chart-orders" class="chart-canvas"></canvas>
+                    <canvas id="myChart" class="chart-canvas" height="200px"></canvas>
               </div>
             </div>
           </div>
@@ -337,6 +366,12 @@ function myFunction(x) {
                       <a ><button onclick="myFunction('demo')" type="button" class="btn btn-warning">EDIT</button></a>
 
                     </div>
+
+                    <div class="col col-lg-sm-md-4">
+                      <a href="{% url 'show_selected_applicants' current_scholarship.id %}"><button type="button" class="btn btn-success">Selected applicants</button></a>
+
+                    </div>
+                    
                     <div class="col col-lg-sm-md-6">
                       <a href="{% url 'delete_scholarship' current_scholarship.id  %}"><button type="button" class="btn btn-danger">Delete This Scholarship</button></a>
 
@@ -379,30 +414,73 @@ function myFunction(x) {
                              <hr class="my-4" />
 {% endif %}
 
-<div class="footer text-center">
-    <div class="row align-items-center justify-content-xl-between">
+   <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
             <div class="copyright text-center text-xl-left text-muted">
-              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Nikhil</a>
+              &copy; 2020 <a href="{% url 'home' %}" class="font-weight-bold ml-1" target="_blank">AIT Scholarships</a>
             </div>
           </div>
           <div class="col-xl-6">
-            <ul class="nav nav-footer justify-content-center justify-content-xl-between">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
               <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Scholarship team AIT</a>
+                <a href="{% url 'how_to_apply' %}" class="nav-link" target="_blank">How to Apply</a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                <a href="{% url 'our_team' %}" class="nav-link" target="_blank">About Us</a>
               </li>
               <li class="nav-item">
-                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                <a href="https://engineertrends.com/post-your-blog/" class="nav-link" target="_blank">Write a Blog</a>
               </li>
-              <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
-              </li>
+            
             </ul>
           </div>
         </div>
-</div>
+      </footer>
+
+      <!---------------  script for bar graph ------>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    <script defer="">
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for k in branch_count.keys %}"{{k}}",{% endfor %}],
+        datasets: [{
+            label: 'Applied applications',
+            data: [{% for v in branch_count.values %}{{v}},{% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+  });
+
+</script>
+
 
  {% endblock %}
